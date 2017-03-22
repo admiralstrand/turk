@@ -24,8 +24,8 @@ lcd_backlight = 4
 # lcd_backlight = 'P8_7'
 
 # Define LCD column and row size for 16x2 LCD.
-lcd_columns = 16
-lcd_rows    = 2
+lcd_columns = 20
+lcd_rows    = 4
 
 # Alternatively specify a 20x4 LCD.
 # lcd_columns = 20

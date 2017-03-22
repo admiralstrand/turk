@@ -1,11 +1,11 @@
 #!/usr/bin/python
-# Example using a character LCD connected to a Raspberry Pi or BeagleBone Black.
+# Example using a character LCD connected to a
+# Raspberry Pi or BeagleBone Black.
 import time
 import Adafruit_CharLCD as LCD
 
-
 # Raspberry Pi pin configuration:
-lcd_rs        = 7  
+lcd_rs        = 7
 lcd_en        = 8
 lcd_d4        = 25
 lcd_d5        = 24
@@ -14,7 +14,7 @@ lcd_d7        = 18
 lcd_backlight = 4
 
 
-# Define LCD column and row size 
+# Define LCD column and row size
 lcd_columns = 20
 lcd_rows    = 4
 

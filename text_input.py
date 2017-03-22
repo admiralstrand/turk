@@ -1,4 +1,5 @@
 import string
+import ada1
 
 
 def read_single_keypress():
@@ -100,7 +101,7 @@ def tappy_typing():
             else:
                 running_string += typed_input
                 # add in a line here that says something like
-                # display_on_lcd(running_string)
+                ada1.write_to_screen(running_string)
                 print running_string
 
 

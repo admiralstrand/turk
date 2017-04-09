@@ -16,9 +16,9 @@ def test_line_breaking():
     c = ("Now is the time for all good men to come"
          " to the aid of the party quick")
 
-    t.break_for_80x20_screen(a)
-    t.break_for_80x20_screen(b)
-    t.break_for_80x20_screen(c)
+    t.break_for_wide_x_high_screen(a)
+    t.break_for_wide_x_high_screen(b)
+    t.break_for_wide_x_high_screen(c)
 
 
 if __name__ == '__main__':

@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+"""Mechanical Turk.
 
+Code to make the turk's text input work
+"""
 import string
-import ada1
+# import ada1
 
 
 def read_single_keypress():
-    """Waits for a single keypress on stdin.
+    """Wait for a single keypress on stdin, then do something when it arrives.
 
     This is a silly function to call if you need to do it a lot because it has
     to store stdin's current setup, setup stdin for reading single keystrokes
@@ -55,12 +58,12 @@ def read_single_keypress():
 
 
 def get_acceptable_chars(special_chars=""):
-    """Return a string of acceptable characters to type.
+    ur"""Return a string of acceptable characters to type.
 
     i.e.:
     0123456789 abcdefghijklmnopqrstuvwxyz
     ABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&'()*+,
-    -./:;<=>?@[\]^_`{|}~
+    -./:;<=>?@[\\]^_`{|}~
 
     add extra chars through the argument. E.g.
         get_acceptable_chars(special_chars="∞×¼")
@@ -78,6 +81,30 @@ def get_acceptable_chars(special_chars=""):
     return acceptableChars
 
 
+def break_for_80x20_screen(typed_input):
+    """Break up the typed input into lines.
+
+    TODO: make it break long words etc. Unlikely to be needed any time soon.
+    """
+    screen = [[""]]
+    row = 0
+    for word in typed_input.split():
+        # if len(word) > 20:
+        #     word = word[:19]
+        if len(screen[row][0]) + len(word) <= 20:
+            screen[row][0] += (word + " ")
+        else:
+            row += 1
+            screen.append([""])
+            screen[row][0] += (word + " ")
+
+    for x in screen:
+        print "|"+x[0].strip().ljust(20)+"|"
+    print " 12345678901234567890\n"
+
+    return screen
+
+
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
 
@@ -89,7 +116,7 @@ def tappy_typing():
     while True:
         running_string = ""
         print("start typing dood!")
-        while len(running_string) < 20:
+        while True:  # len(running_string) < 20:
             print("next letter:")
             typed_input = read_single_keypress()
             if ord(typed_input) == 3:  # 3 is ctrl + c. Dissable in live
@@ -98,13 +125,24 @@ def tappy_typing():
                 return True
                 # to here, to dissable leaving the programme.
                 pass
-            if typed_input not in acceptableChars:
-                print "don't be a sketchy fuck"
+            elif ord(typed_input) == 13:
+                print "SENDING"
+                # TODO: the actual sending code
+                running_string = ""
+            elif ord(typed_input) == 127:
+                length = len(running_string)
+                running_string = running_string[:length-1]
+                screen_data = break_for_80x20_screen(running_string)
             else:
-                running_string += typed_input
-                # add in a line here that says something like
-                ada1.write_to_screen(running_string)
-                print running_string
+                if typed_input not in acceptableChars:
+                    print "don't be a sketchy fuck"
+                else:
+                    running_string += typed_input
+                    # add in a line here that says something like
+                    screen_data = break_for_80x20_screen(running_string)
+            # ada1.write_to_screen(screen_data)
+            print screen_data
 
 
-tappy_typing()
+if __name__ == "__main__":
+    tappy_typing()

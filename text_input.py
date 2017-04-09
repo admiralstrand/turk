@@ -5,6 +5,7 @@ Code to make the turk's text input work
 """
 import string
 # import ada1
+LIVEMODE = False
 
 
 def read_single_keypress():
@@ -120,11 +121,9 @@ def tappy_typing():
             print("next letter:")
             typed_input = read_single_keypress()
             if ord(typed_input) == 3:  # 3 is ctrl + c. Dissable in live
-                # Comment from here...
-                print "EJECT!!EJECT!!EJECT!!"
-                return True
-                # to here, to dissable leaving the programme.
-                pass
+                if LIVEMODE:
+                    print "EJECT!!EJECT!!EJECT!!"
+                    return True
             elif ord(typed_input) == 13:
                 print "SENDING"
                 # TODO: the actual sending code

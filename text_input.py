@@ -81,7 +81,7 @@ def get_acceptable_chars(special_chars=""):
     return acceptableChars
 
 
-def break_for_80x20_screen(typed_input):
+def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
     """Break up the typed input into lines.
 
     TODO: make it break long words etc. Unlikely to be needed any time soon.
@@ -91,7 +91,7 @@ def break_for_80x20_screen(typed_input):
     for word in typed_input.split():
         # if len(word) > 20:
         #     word = word[:19]
-        if len(screen[row][0]) + len(word) <= 20:
+        if len(screen[row][0]) + len(word) <= wide:
             screen[row][0] += (word + " ")
         else:
             row += 1
@@ -99,8 +99,8 @@ def break_for_80x20_screen(typed_input):
             screen[row][0] += (word + " ")
 
     for x in screen:
-        print "|"+x[0].strip().ljust(20)+"|"
-    print " 12345678901234567890\n"
+        print "|"+x[0].strip().ljust(wide)+"|"
+    print "-" + "+" * (wide-1) + "-\n"
 
     return screen
 
@@ -132,16 +132,16 @@ def tappy_typing():
             elif ord(typed_input) == 127:
                 length = len(running_string)
                 running_string = running_string[:length-1]
-                screen_data = break_for_80x20_screen(running_string)
+                screen_data = break_for_wide_x_high_screen(running_string)
             else:
                 if typed_input not in acceptableChars:
                     print "don't be a sketchy fuck"
                 else:
                     running_string += typed_input
                     # add in a line here that says something like
-                    screen_data = break_for_80x20_screen(running_string)
+                    screen_data = break_for_wide_x_high_screen(running_string)
             # ada1.write_to_screen(screen_data)
-            print screen_data
+            # print screen_data
 
 
 if __name__ == "__main__":

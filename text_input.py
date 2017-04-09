@@ -4,7 +4,7 @@
 Code to make the turk's text input work
 """
 import string
-# import ada1
+import ada1
 LIVEMODE = False
 
 
@@ -139,7 +139,7 @@ def tappy_typing():
                     running_string += typed_input
                     # add in a line here that says something like
                     screen_data = break_for_wide_x_high_screen(running_string)
-            # ada1.write_to_screen(screen_data)
+            ada1.write_to_screen(screen_data)
             # print screen_data
 
 

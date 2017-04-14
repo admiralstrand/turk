@@ -35,21 +35,21 @@ def demo():
     lcd.message('Hello\nworld!')
 
     # Wait 5 seconds
-    time.sleep(5.0)
+    time.sleep(1.0)
 
     # Demo showing the cursor.
     lcd.clear()
     lcd.show_cursor(True)
     lcd.message('Show cursor')
 
-    time.sleep(5.0)
+    time.sleep(1.0)
 
     # Demo showing the blinking cursor.
     lcd.clear()
     lcd.blink(True)
     lcd.message('Blink cursor')
 
-    time.sleep(5.0)
+    time.sleep(2.0)
 
     # Stop blinking and showing cursor.
     lcd.show_cursor(False)
@@ -68,11 +68,11 @@ def demo():
 
     # Demo turning backlight off and on.
     lcd.clear()
-    lcd.message('Flash backlight\nin 5 seconds...')
-    time.sleep(5.0)
+    lcd.message('Flash backlight\nin 1 seconds...')
+    time.sleep(1.0)
     # Turn backlight off.
     lcd.set_backlight(0)
-    time.sleep(2.0)
+    time.sleep(1.0)
     # Change message.
     lcd.clear()
     lcd.message('Goodbye!')

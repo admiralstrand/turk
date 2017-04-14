@@ -135,49 +135,55 @@ def backspace(running_string):
 #     print [len(x[0]) for x in screen], screen
 
 
+def show(running_string):
+    """Print to console and show on lcd."""
+    screen_data = break_for_wide_x_high_screen(running_string)
+    screen_data = prepare_for_screen(screen_data)
+    print screen_data
+    # ada1.write_to_screen(screen_data)
+
+
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
 
     This handles special cases, like ctrl+c to leave the programme.
     """
     acceptableChars = get_acceptable_chars()
+
     print "\nWelcome to the turk"
     print "I accept:", acceptableChars
     print("start typing dood!")
 
+    running_string = ""
     while True:
-        running_string = ""
-        ada1.write_to_screen(message="bumhole")
-        print("start typing dood!")
-        while True:
-            print("next letter:")
-            typed_input = read_single_keypress()
         print("--------------------")
+        typed_input = read_single_keypress()
 
-            if ord(typed_input) == 3:  # 3 is ctrl + c.
-                if not LIVEMODE:
-                    print "EJECT!!EJECT!!EJECT!!"
-                    return True
+        if ord(typed_input) == 3:  # 3 is ctrl + c.
+            if not LIVEMODE:
+                print "EJECT!!EJECT!!EJECT!!"
+                return True
 
-            elif ord(typed_input) == 13:
-                print "SENDING", typed_input
-                # TODO: the actual sending code
-                running_string = ""
+        elif ord(typed_input) == 13:
+            print "SENDING", typed_input
+            # TODO: the actual sending code
+            running_string = ""
+            # ada1.write_to_screen("say something else:")
 
-            elif len(running_string) == 80:
-                running_string = send_complete_words(running_string)
+        elif len(running_string) == 80:
+            running_string = send_complete_words(running_string)
+            show(running_string)
 
-            elif ord(typed_input) == 127:  # backspace
-                screen_data = backspace(running_string)
+        elif ord(typed_input) == 127:  # backspace
+            running_string = backspace(running_string)
+            show(running_string)
 
+        else:
+            if typed_input not in acceptableChars:
+                print "don't be a sketchy fuck"
             else:
-                if typed_input not in acceptableChars:
-                    print "don't be a sketchy fuck"
-                else:
-                    running_string += typed_input
-                    screen_data = break_for_wide_x_high_screen(running_string)
-            screen_data = prepare_for_screen(screen_data)
-            ada1.write_to_screen(screen_data)
+                running_string += typed_input
+                show(running_string)
 
 
 if __name__ == "__main__":

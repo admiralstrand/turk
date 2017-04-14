@@ -82,7 +82,10 @@ def get_acceptable_chars(special_chars=""):
     return acceptableChars
 
 
-def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
+def break_for_wide_x_high_screen(typed_input,
+                                 wide=20,
+                                 high=4,
+                                 pretty_print=True):
     """Break up the typed input into lines.
 
     TODO: make it break long words etc. Unlikely to be needed any time soon.
@@ -99,9 +102,10 @@ def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
             screen.append([""])
             screen[row][0] += (word + " ")
 
-    for x in screen:
-        print "|"+x[0].strip().ljust(wide)+"|"
-    print "-" + "+" * (wide-1) + "-\n"
+    if pretty_print:
+        for x in screen:
+            print "|"+x[0].strip().ljust(wide)+"|"
+        print "-" + "+" * (wide-1) + "-\n"
 
     return screen
 
@@ -147,7 +151,6 @@ def tappy_typing():
                     # add in a line here that says something like
                     screen_data = break_for_wide_x_high_screen(running_string)
             ada1.write_to_screen(screen_data)
-            # print screen_data
             screen_data = prepare_for_screen(screen_data)
 
 

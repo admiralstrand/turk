@@ -121,6 +121,23 @@ def prepare_for_screen(text, wide=20, high=4):
     return payload.strip("\n")
 
 
+def send_complete_words(running_string):
+    """Send the characters up to the last space.
+
+    Returns characters after the last space to be added to."""
+    last_space = running_string.rfind(" ")
+    print "SENDING", running_string[:last_space]
+    # TODO: actually send
+    return running_string[last_space:]
+
+
+def backspace(running_string):
+    """Pull the last char of the string."""
+    length = len(running_string)
+    running_string = running_string[:length-1]
+    return break_for_wide_x_high_screen(running_string)
+
+
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
 
@@ -148,14 +165,10 @@ def tappy_typing():
                 running_string = ""
 
             elif len(running_string) == 80:
-                last_space = running_string.rfind(" ")
-                print "SENDING", running_string[:last_space]
-                running_string = running_string[last_space:]
+                running_string = send_complete_words(running_string)
 
             elif ord(typed_input) == 127:  # backspace
-                length = len(running_string)
-                running_string = running_string[:length-1]
-                screen_data = break_for_wide_x_high_screen(running_string)
+                screen_data = backspace(running_string)
 
             else:
                 if typed_input not in acceptableChars:

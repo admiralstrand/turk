@@ -111,10 +111,31 @@ def break_for_wide_x_high_screen(typed_input,
 
 
 def prepare_for_screen(text, wide=20, high=4):
+    """Convert the input list of lists to a string.
+
+    also remove the trailing newline.
+    """
     payload = ""
     for x in text:
         payload += x[0].strip().ljust(wide) + "\n"
     return payload.strip("\n")
+
+
+def send_complete_words(running_string):
+    """Send the characters up to the last space.
+
+    Returns characters after the last space to be added to."""
+    last_space = running_string.rfind(" ")
+    print "SENDING", running_string[:last_space]
+    # TODO: actually send
+    return running_string[last_space:]
+
+
+def backspace(running_string):
+    """Pull the last char of the string."""
+    length = len(running_string)
+    running_string = running_string[:length-1]
+    return break_for_wide_x_high_screen(running_string)
 
 
 def tappy_typing():
@@ -127,29 +148,33 @@ def tappy_typing():
 
     while True:
         running_string = ""
-        ada1.write_to_screen(message="your wish is my bumhole")
+        ada1.write_to_screen(message="bumhole")
         print("start typing dood!")
-        while True:  # len(running_string) < 20:
+        while True:
             print("next letter:")
             typed_input = read_single_keypress()
-            if ord(typed_input) == 3:  # 3 is ctrl + c. Dissable in live
+
+            if ord(typed_input) == 3:  # 3 is ctrl + c.
                 if not LIVEMODE:
                     print "EJECT!!EJECT!!EJECT!!"
                     return True
+
             elif ord(typed_input) == 13:
-                print "SENDING"
+                print "SENDING", typed_input
                 # TODO: the actual sending code
                 running_string = ""
+
+            elif len(running_string) == 80:
+                running_string = send_complete_words(running_string)
+
             elif ord(typed_input) == 127:  # backspace
-                length = len(running_string)
-                running_string = running_string[:length-1]
-                screen_data = break_for_wide_x_high_screen(running_string)
+                screen_data = backspace(running_string)
+
             else:
                 if typed_input not in acceptableChars:
                     print "don't be a sketchy fuck"
                 else:
                     running_string += typed_input
-                    # add in a line here that says something like
                     screen_data = break_for_wide_x_high_screen(running_string)
             screen_data = prepare_for_screen(screen_data)
             ada1.write_to_screen(screen_data)

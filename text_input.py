@@ -106,6 +106,13 @@ def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
     return screen
 
 
+def prepare_for_screen(text, wide=20, high=4):
+    payload = ""
+    for x in text:
+        payload += x[0].strip().ljust(wide) + "\n"
+    return payload
+
+
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
 

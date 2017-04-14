@@ -136,18 +136,22 @@ def tappy_typing():
         while True:  # len(running_string) < 20:
             print("next letter:")
             typed_input = read_single_keypress()
+
             if ord(typed_input) == 3:  # 3 is ctrl + c. Dissable in live
                 if not LIVEMODE:
                     print "EJECT!!EJECT!!EJECT!!"
                     return True
+
             elif ord(typed_input) == 13:
                 print "SENDING"
                 # TODO: the actual sending code
                 running_string = ""
+
             elif ord(typed_input) == 127:  # backspace
                 length = len(running_string)
                 running_string = running_string[:length-1]
                 screen_data = break_for_wide_x_high_screen(running_string)
+
             else:
                 if typed_input not in acceptableChars:
                     print "don't be a sketchy fuck"

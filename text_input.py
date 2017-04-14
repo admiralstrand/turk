@@ -143,9 +143,14 @@ def tappy_typing():
                     return True
 
             elif ord(typed_input) == 13:
-                print "SENDING"
+                print "SENDING", typed_input
                 # TODO: the actual sending code
                 running_string = ""
+
+            elif len(running_string) == 80:
+                last_space = running_string.rfind(" ")
+                print "SENDING", running_string[:last_space]
+                running_string = running_string[last_space:]
 
             elif ord(typed_input) == 127:  # backspace
                 length = len(running_string)

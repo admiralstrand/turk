@@ -107,7 +107,7 @@ def break_for_wide_x_high_screen(typed_input,
         print len(typed_input), typed_input
         print [len(x[0]) for x in screen], screen
 
-    return screen
+    return screen.strip("\n")
 
 
 def prepare_for_screen(text, wide=20, high=4):

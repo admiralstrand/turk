@@ -148,7 +148,7 @@ def tappy_typing():
 
     while True:
         running_string = ""
-        ada1.write_to_screen(message="your wish is my bumhole")
+        ada1.write_to_screen(message="bumhole")
         print("start typing dood!")
         while True:
             print("next letter:")

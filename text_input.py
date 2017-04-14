@@ -113,7 +113,8 @@ def prepare_for_screen(text, wide=20, high=4):
 def send_complete_words(running_string):
     """Send the characters up to the last space.
 
-    Returns characters after the last space to be added to."""
+    Returns characters after the last space to be added to.
+    """
     last_space = running_string.rfind(" ")
     print "SENDING", running_string[:last_space]
     # TODO: actually send

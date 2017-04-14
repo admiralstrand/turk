@@ -139,7 +139,7 @@ def tappy_typing():
                 print "SENDING"
                 # TODO: the actual sending code
                 running_string = ""
-            elif ord(typed_input) == 127:
+            elif ord(typed_input) == 127:  # backspace
                 length = len(running_string)
                 running_string = running_string[:length-1]
                 screen_data = break_for_wide_x_high_screen(running_string)

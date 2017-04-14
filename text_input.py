@@ -73,7 +73,6 @@ def get_acceptable_chars(special_chars=""):
     numbers = "".join([str(i) for i in range(10)])
     letters = string.ascii_letters
     punctuation = string.punctuation
-    print numbers, letters, punctuation
     acceptableChars = "".join([numbers,
                                " ",
                                special_chars,
@@ -99,13 +98,6 @@ def break_for_wide_x_high_screen(typed_input,
             row += 1
             screen.append([""])
             screen[row][0] += (word + " ")
-
-    if pretty_print:
-        for x in screen:
-            print "|"+x[0].strip().ljust(wide)+"|"
-        print "-" + "+" * (wide-1) + "-"
-        print len(typed_input), typed_input
-        print [len(x[0]) for x in screen], screen
 
     return screen
 
@@ -138,13 +130,23 @@ def backspace(running_string):
     return break_for_wide_x_high_screen(running_string)
 
 
+# if pretty_print:
+#     for x in screen:
+#         print "|"+x[0].strip().ljust(wide)+"|"
+#     print "-" + "+" * (wide-1) + "-"
+#     print len(typed_input), typed_input
+#     print [len(x[0]) for x in screen], screen
+
+
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
 
     This handles special cases, like ctrl+c to leave the programme.
     """
     acceptableChars = get_acceptable_chars()
+    print "\nWelcome to the turk"
     print "I accept:", acceptableChars
+    print("start typing dood!")
 
     while True:
         running_string = ""
@@ -153,6 +155,7 @@ def tappy_typing():
         while True:
             print("next letter:")
             typed_input = read_single_keypress()
+        print("--------------------")
 
             if ord(typed_input) == 3:  # 3 is ctrl + c.
                 if not LIVEMODE:

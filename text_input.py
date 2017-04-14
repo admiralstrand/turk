@@ -128,7 +128,7 @@ def tappy_typing():
             print("next letter:")
             typed_input = read_single_keypress()
             if ord(typed_input) == 3:  # 3 is ctrl + c. Dissable in live
-                if LIVEMODE:
+                if not LIVEMODE:
                     print "EJECT!!EJECT!!EJECT!!"
                     return True
             elif ord(typed_input) == 13:

@@ -152,8 +152,8 @@ def tappy_typing():
                     running_string += typed_input
                     # add in a line here that says something like
                     screen_data = break_for_wide_x_high_screen(running_string)
-            ada1.write_to_screen(screen_data)
             screen_data = prepare_for_screen(screen_data)
+            ada1.write_to_screen(running_string)
 
 
 if __name__ == "__main__":

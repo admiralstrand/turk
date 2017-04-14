@@ -170,7 +170,7 @@ def tappy_typing():
             running_string = ""
             # ada1.write_to_screen("say something else:")
 
-        elif len(running_string) == 80:
+        elif len(running_string) == 79:
             running_string = send_complete_words(running_string)
             show(running_string)
 

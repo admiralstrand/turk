@@ -83,7 +83,7 @@ def get_acceptable_chars(special_chars=""):
 
 
 def break_for_wide_x_high_screen(typed_input,
-                                 wide=20,
+                                 wide=19,
                                  high=4,
                                  pretty_print=True):
     """Break up the typed input into lines.
@@ -105,12 +105,14 @@ def break_for_wide_x_high_screen(typed_input,
     if pretty_print:
         for x in screen:
             print "|"+x[0].strip().ljust(wide)+"|"
-        print "-" + "+" * (wide-1) + "-\n"
+        print "-" + "+" * (wide-1) + "-"
+        print len(typed_input), typed_input
+        print [len(x[0]) for x in screen], screen
 
     return screen
 
 
-def prepare_for_screen(text, wide=20, high=4):
+def prepare_for_screen(text, wide=19, high=4):
     payload = ""
     for x in text:
         payload += x[0].strip().ljust(wide) + "\n"

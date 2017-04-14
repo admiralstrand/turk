@@ -124,8 +124,7 @@ def send_complete_words(running_string):
 def backspace(running_string):
     """Pull the last char of the string."""
     length = len(running_string)
-    running_string = running_string[:length-1]
-    return break_for_wide_x_high_screen(running_string)
+    return running_string[:length-1]
 
 
 # if pretty_print:

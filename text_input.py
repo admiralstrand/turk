@@ -161,7 +161,7 @@ def tappy_typing():
 
         if ord(typed_input) == 3:  # 3 is ctrl + c.
             if not LIVEMODE:
-                print "EJECT!!EJECT!!EJECT!!"
+                print "!! EJECT !! EJECT !! EJECT !!"
                 return True
 
         elif ord(typed_input) == 13:

@@ -81,10 +81,7 @@ def get_acceptable_chars(special_chars=""):
     return acceptableChars
 
 
-def break_for_wide_x_high_screen(typed_input,
-                                 wide=20,
-                                 high=4,
-                                 pretty_print=True):
+def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
     """Break up the typed input into lines.
 
     TODO: make it break long words etc. Unlikely to be needed any time soon.

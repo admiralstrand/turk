@@ -6,7 +6,7 @@ Code to make the turk's text input work
 import text_input_helpers as tt
 import print_helpers as tp
 
-# import ada1
+import ada1
 LIVEMODE = False
 BACKSPACE_KEY = 127
 ENTER_KEY = 13
@@ -39,7 +39,7 @@ def tappy_typing():
             tp.naive_print(typed_input)
             # TODO: the actual sending code
             running_string = ""
-            # ada1.write_to_screen("say something else:")
+            ada1.write_to_screen("say something else:")
 
         elif tt.buffer_length(running_string) == 80:
             running_string = tt.send_complete_words(running_string)

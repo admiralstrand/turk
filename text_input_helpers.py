@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """Mechanical Turk text input functions."""
 import string
-
+try:  # ben's computer
+    import ada1
+except:
+    print "I think I'm running on Ben's computer"
+    import ben_shim as ada1
 
 def read_single_keypress():
     """Wait for a single keypress on stdin, then do something when it arrives.
@@ -141,4 +145,7 @@ def show(running_string):
     screen_data = break_for_wide_x_high_screen(running_string)
     screen_data = prepare_for_screen(screen_data)
     print screen_data
-    # ada1.write_to_screen(screen_data)
+    try:
+        ada1.write_to_screen(screen_data)
+    except Exception as e:
+        print "probably on Ben's computer", e

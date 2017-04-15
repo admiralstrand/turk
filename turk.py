@@ -3,10 +3,14 @@
 
 Code to make the turk's text input work
 """
-import text_input_helpers as tt
 import print_helpers as tp
+import text_input_helpers as tt
+try:  # ben's computer
+    import ada1
+except:
+    print "I think I'm running on Ben's computer"
+    import ben_shim as ada1
 
-import ada1
 LIVEMODE = False
 BACKSPACE_KEY = 127
 ENTER_KEY = 13

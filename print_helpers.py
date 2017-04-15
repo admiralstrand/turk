@@ -37,10 +37,6 @@ def svg_print(text):
         type_this = "lpr -o orientation-requested=3 -o fit-to-page tempPrint.png"
         os.system(type_this)
         print "should be printing", type_this
-
-        type_this = "lpr -o orientation-requested=4 -o fit-to-page tempPrint.png"
-        os.system(type_this)
-        print "should be printing", type_this
     except Exception as e:
         print "probably on Ben's computer", e
 

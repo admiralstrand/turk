@@ -3,150 +3,14 @@
 
 Code to make the turk's text input work
 """
-import string
-import ada1
+import text_input_helpers as tt
+import print_helpers as tp
+
+# import ada1
 LIVEMODE = False
-
-
-def read_single_keypress():
-    """Wait for a single keypress on stdin, then do something when it arrives.
-
-    This is a silly function to call if you need to do it a lot because it has
-    to store stdin's current setup, setup stdin for reading single keystrokes
-    then read the single keystroke then revert stdin back after reading the
-    keystroke.
-
-    Returns the character of the key that was pressed (zero on
-    KeyboardInterrupt which can happen when a signal gets handled)
-
-    from http://stackoverflow.com/a/6599441/1835727 written by mheyman
-    """
-    import fcntl
-    import os
-    import sys
-    import termios
-    fd = sys.stdin.fileno()
-    # save old state
-    flags_save = fcntl.fcntl(fd, fcntl.F_GETFL)
-    attrs_save = termios.tcgetattr(fd)
-    # make raw - the way to do this comes from the termios(3) man page.
-    attrs = list(attrs_save)  # copy the stored version to update
-    # iflag
-    attrs[0] &= ~(termios.IGNBRK | termios.BRKINT | termios.PARMRK
-                  | termios.ISTRIP | termios.INLCR | termios. IGNCR
-                  | termios.ICRNL | termios.IXON)
-    # oflag
-    attrs[1] &= ~termios.OPOST
-    # cflag
-    attrs[2] &= ~(termios.CSIZE | termios. PARENB)
-    attrs[2] |= termios.CS8
-    # lflag
-    attrs[3] &= ~(termios.ECHONL | termios.ECHO | termios.ICANON
-                  | termios.ISIG | termios.IEXTEN)
-    termios.tcsetattr(fd, termios.TCSANOW, attrs)
-    # turn off non-blocking
-    fcntl.fcntl(fd, fcntl.F_SETFL, flags_save & ~os.O_NONBLOCK)
-    # read a single keystroke
-    try:
-        ret = sys.stdin.read(1)  # returns a single character
-    except KeyboardInterrupt:
-        ret = 0
-    finally:
-        # restore old state
-        termios.tcsetattr(fd, termios.TCSAFLUSH, attrs_save)
-        fcntl.fcntl(fd, fcntl.F_SETFL, flags_save)
-    return ret
-
-
-def get_acceptable_chars(special_chars=""):
-    ur"""Return a string of acceptable characters to type.
-
-    i.e.:
-    0123456789 abcdefghijklmnopqrstuvwxyz
-    ABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&'()*+,
-    -./:;<=>?@[\\]^_`{|}~
-
-    add extra chars through the argument. E.g.
-        get_acceptable_chars(special_chars="∞×¼")
-    be aware that the system might not be able to handle these chars though!
-    """
-    numbers = "".join([str(i) for i in range(10)])
-    letters = string.ascii_letters
-    punctuation = string.punctuation
-    acceptableChars = "".join([numbers,
-                               " ",
-                               special_chars,
-                               letters,
-                               punctuation])
-    return acceptableChars
-
-
-def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
-    """Break up the typed input into lines.
-
-    TODO: make it break long words etc. Unlikely to be needed any time soon.
-    """
-    screen = [[""]]
-    row = 0
-    for word in typed_input.split():
-        if len(screen[row][0]) + len(word) <= wide:
-            screen[row][0] += (word + " ")
-        else:
-            row += 1
-            screen.append([""])
-            screen[row][0] += (word + " ")
-
-    return screen
-
-
-def prepare_for_screen(text, wide=20, high=4):
-    """Convert the input list of lists to a string.
-
-    also remove the trailing newline.
-    """
-    payload = ""
-    for x in text:
-        payload += x[0].strip().ljust(wide) + "\n"
-    return payload.strip("\n").strip()
-
-
-def send_complete_words(running_string):
-    """Send the characters up to the last space.
-
-    Returns characters after the last space to be added to.
-    """
-    last_space = running_string.rfind(" ")
-    print "SENDING", running_string[:last_space]
-    # TODO: actually send
-    return running_string[last_space:]
-
-
-def backspace(running_string):
-    """Pull the last char of the string."""
-    length = len(running_string)
-    return running_string[:length-1]
-
-
-def buffer_length(running_text):
-    as_lol = break_for_wide_x_high_screen(running_text)
-    as_str = prepare_for_screen(as_lol)
-    return len(as_str)
-
-
-# if pretty_print:
-#     for x in screen:
-#         print "|"+x[0].strip().ljust(wide)+"|"
-#     print "-" + "+" * (wide-1) + "-"
-#     print len(typed_input), typed_input
-#     print [len(x[0]) for x in screen], screen
-
-
-def show(running_string):
-    """Print to console and show on lcd."""
-    screen_data = break_for_wide_x_high_screen(running_string)
-    screen_data = prepare_for_screen(screen_data)
-    print screen_data
-    ada1.write_to_screen(screen_data)
+BACKSPACE_KEY = 127
+ENTER_KEY = 13
+CTRL_C = 3
 
 
 def tappy_typing():
@@ -154,7 +18,7 @@ def tappy_typing():
 
     This handles special cases, like ctrl+c to leave the programme.
     """
-    acceptableChars = get_acceptable_chars()
+    acceptableChars = tt.get_acceptable_chars()
 
     print "\nWelcome to the turk"
     print "I accept:", acceptableChars
@@ -163,33 +27,34 @@ def tappy_typing():
     running_string = ""
     while True:
         print("--------------------")
-        typed_input = read_single_keypress()
+        typed_input = tt.read_single_keypress()
 
-        if ord(typed_input) == 3:  # 3 is ctrl + c.
+        if ord(typed_input) == CTRL_C:
             if not LIVEMODE:
                 print "!! EJECT !! EJECT !! EJECT !!"
                 return True
 
-        elif ord(typed_input) == 13:
-            print "SENDING", typed_input
+        elif ord(typed_input) == ENTER_KEY:
+            tp.dummy_print(typed_input)
+            tp.naive_print(typed_input)
             # TODO: the actual sending code
             running_string = ""
             # ada1.write_to_screen("say something else:")
 
-        elif buffer_length(running_string) == 80:
-            running_string = send_complete_words(running_string)
-            show(running_string)
+        elif tt.buffer_length(running_string) == 80:
+            running_string = tt.send_complete_words(running_string)
+            tt.show(running_string)
 
-        elif ord(typed_input) == 127:  # backspace
-            running_string = backspace(running_string)
-            show(running_string)
+        elif ord(typed_input) == BACKSPACE_KEY:
+            running_string = tt.backspace(running_string)
+            tt.show(running_string)
 
         else:
             if typed_input not in acceptableChars:
                 print "don't be a sketchy fuck"
             else:
                 running_string += typed_input
-                show(running_string)
+                tt.show(running_string)
 
 
 if __name__ == "__main__":

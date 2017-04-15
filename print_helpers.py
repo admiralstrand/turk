@@ -19,5 +19,5 @@ def dummy_print(to_print):
 def naive_print(to_print):
     lines_list = tt.break_for_wide_x_high_screen(to_print)
     broken_string = tt.prepare_for_screen(lines_list)
-    command = "echo \"{}\" | lpr".format(broken_string)
-    os.command(command)
+    type_this = "echo \"{}\" | lpr".format(broken_string)
+    os.system(type_this)

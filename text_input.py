@@ -127,6 +127,12 @@ def backspace(running_string):
     return running_string[:length-1]
 
 
+def buffer_length(running_text):
+    as_lol = break_for_wide_x_high_screen(running_text)
+    as_str = prepare_for_screen(as_lol)
+    return len(as_str)
+
+
 # if pretty_print:
 #     for x in screen:
 #         print "|"+x[0].strip().ljust(wide)+"|"
@@ -170,7 +176,7 @@ def tappy_typing():
             running_string = ""
             # ada1.write_to_screen("say something else:")
 
-        elif len(running_string) == 79:
+        elif buffer_length(running_string) == 80:
             running_string = send_complete_words(running_string)
             show(running_string)
 

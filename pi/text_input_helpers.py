@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Mechanical Turk text input functions."""
 import string
+import math
 try:  # ben's computer
     import ada1
 except:
@@ -81,14 +82,42 @@ def get_acceptable_chars(special_chars=""):
     return acceptableChars
 
 
-def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
-    """Break up the typed input into lines.
+def hyphenate(word, max_width=20):
+    """Extremely ghetto hyphenation.
 
-    TODO: make it break long words etc. Unlikely to be needed any time soon.
+    There must be a nice algoritm that's just out of reach of my brain today.
     """
+    print len(word)
+    if len(word) <= max_width:
+        return word
+    elif len(word) > 20 and len(word) <= 40:
+        mid = int(math.floor(len(word)/2))
+        print 1, mid, "<"
+        return word[:mid] + " " + word[mid:]
+    elif len(word) > 40 and len(word) <= 58:
+        # 59 is hard to handle
+        mid = int(math.floor(len(word)/3))
+        print 2, mid, "<"
+        return word[:mid] + " " + word[mid:mid*2] + " " + word[mid*2:]
+    elif len(word) > 58:
+        w = max_width
+        print 3, w, "<"
+        rtn = " ".join([word[:w], word[w:w*2], word[w*2:w*3], word[w*3:]])
+        print rtn
+        return rtn
+    else:
+        print "don't be a jerk"
+        return word
+
+
+def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
+    """Break up the typed input into lines."""
     screen = [""]
     row = 0
-    for word in typed_input.split():
+    words = typed_input.split()
+    words = " ".join([hyphenate(x) for x in words]).split()
+    print words
+    for word in words:
         if len(screen[row]) + len(word) <= wide:
             screen[row] += (word + " ")
         else:

@@ -5,6 +5,7 @@ Code to make the turk's text input work
 """
 import print_helpers as tp
 import text_input_helpers as tt
+import time
 try:  # ben's computer
     import ada1
 except:
@@ -42,7 +43,9 @@ def tappy_typing():
             tp.svg_print(running_string)
             # TODO: the actual sending code
             running_string = ""
-            ada1.write_to_screen("say something else:")
+            ada1.write_to_screen("Sending")
+            time.sleep(0.5)
+            ada1.write_to_screen("")
 
         elif tt.buffer_length(running_string) == 80:
             running_string = tt.send_complete_words(running_string)

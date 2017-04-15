@@ -107,7 +107,7 @@ def prepare_for_screen(text, wide=20, high=4):
     payload = ""
     for x in text:
         payload += x.strip().ljust(wide) + "\n"
-    return payload.strip("\n").strip()
+    return payload.strip("\n")
 
 
 def send_complete_words(running_string):

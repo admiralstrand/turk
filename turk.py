@@ -39,7 +39,7 @@ def tappy_typing():
                 return True
 
         elif ord(typed_input) == ENTER_KEY:
-            tp.naive_print(typed_input)
+            tp.naive_print(running_string)
             # TODO: the actual sending code
             running_string = ""
             ada1.write_to_screen("say something else:")

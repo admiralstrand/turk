@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+"""Super minimal app for the turk."""
 from flask import Flask
-from flask import render_template
+# from flask import render_template
 from flask_socketio import SocketIO
+import sys
+sys.path.insert(0, '/var/www/html/turk')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'

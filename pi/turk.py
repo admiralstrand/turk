@@ -55,12 +55,12 @@ def tappy_typing():
             running_string = tt.backspace(running_string)
             tt.show(running_string)
 
+        elif typed_input not in acceptableChars:
+            print "don't be a sketchy fuck"
+
         else:
-            if typed_input not in acceptableChars:
-                print "don't be a sketchy fuck"
-            else:
-                running_string += typed_input
-                tt.show(running_string)
+            running_string += typed_input
+            tt.show(running_string)
 
 
 if __name__ == "__main__":

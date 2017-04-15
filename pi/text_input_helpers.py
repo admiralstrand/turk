@@ -96,6 +96,9 @@ def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
             screen.append("")
             screen[row] += (word + " ")
 
+    screen += [''] * (4 - len(screen))  # fill in the blanks
+    screen = [r.ljust(wide, " ") for r in screen]
+
     return screen
 
 

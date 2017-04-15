@@ -7,6 +7,7 @@ except:
     print "I think I'm running on Ben's computer"
     import ben_shim as ada1
 
+
 def read_single_keypress():
     """Wait for a single keypress on stdin, then do something when it arrives.
 

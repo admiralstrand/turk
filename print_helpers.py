@@ -34,11 +34,11 @@ def svg_print(text):
     handle.render_cairo(ctx)
     img.write_to_png("tempPrint.png")
     try:
-        type_this = "lpr -o landscape -o fit-to-page tempPrint.png"
+        type_this = "lpr -o orientation-requested=3 -o fit-to-page tempPrint.png"
         os.system(type_this)
         print "should be printing", type_this
 
-        type_this = "lpr -o portrait -o fit-to-page tempPrint.png"
+        type_this = "lpr -o orientation-requested=4 -o fit-to-page tempPrint.png"
         os.system(type_this)
         print "should be printing", type_this
     except Exception as e:

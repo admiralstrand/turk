@@ -11,7 +11,7 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'Hello boys!'
 
 
 @socketio.on('message')

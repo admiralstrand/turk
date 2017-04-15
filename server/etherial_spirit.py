@@ -17,6 +17,7 @@ def hello_world():
 @socketio.on('message')
 def handle_message(message):
     print('received message: ' + message)
+    SocketIO.send("I heard" + message)
 
 
 if __name__ == '__main__':

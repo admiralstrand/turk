@@ -29,8 +29,9 @@ def on_open(ws):
 
 if __name__ == "__main__":
     websocket.enableTrace(True)
-    # "http://localhost:5000/",
-    ws = websocket.WebSocketApp("wss://echo.websocket.org",
+    # server_address = "wss://echo.websocket.org",
+    server_address = "ws://ec2-52-40-215-205.us-west-2.compute.amazonaws.com/"
+    ws = websocket.WebSocketApp(server_address,
                                 on_message=on_message,
                                 on_error=on_error,
                                 on_close=on_close)

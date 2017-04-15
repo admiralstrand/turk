@@ -131,9 +131,9 @@ def backspace(running_string):
 
 
 def buffer_length(running_text):
-    as_lol = break_for_wide_x_high_screen(running_text)
-    as_str = prepare_for_screen(as_lol)
     """Measure the length of the broken up string."""
+    as_list_of_lists = break_for_wide_x_high_screen(running_text)
+    as_str = prepare_for_screen(as_list_of_lists)
     return len(as_str)
 
 

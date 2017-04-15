@@ -44,10 +44,11 @@ def svg_print(text):
 def svg_template(text):
     """Provide an svg for the printer to print."""
     text = tt.break_for_wide_x_high_screen(text)
+    # transform="matrix(-0.85988046,0,0,-0.85988046,1032.4181,384.69312)"
     template = u"""
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400"
      xmlns:xlink="http://www.w3.org/1999/xlink">
-  <g transform="matrix(-0.85988046,0,0,-0.85988046,1032.4181,384.69312)">
+  <g >
     <image width="1152" height="720" x="-63.4" y="-347.3"
            xlink:href="ben.png" transform="translate(50,200)"
            preserveAspectRatio="none"/>

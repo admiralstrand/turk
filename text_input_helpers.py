@@ -81,15 +81,15 @@ def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
 
     TODO: make it break long words etc. Unlikely to be needed any time soon.
     """
-    screen = [[""]]
+    screen = [""]
     row = 0
     for word in typed_input.split():
-        if len(screen[row][0]) + len(word) <= wide:
-            screen[row][0] += (word + " ")
+        if len(screen[row]) + len(word) <= wide:
+            screen[row] += (word + " ")
         else:
             row += 1
-            screen.append([""])
-            screen[row][0] += (word + " ")
+            screen.append("")
+            screen[row] += (word + " ")
 
     return screen
 
@@ -101,7 +101,7 @@ def prepare_for_screen(text, wide=20, high=4):
     """
     payload = ""
     for x in text:
-        payload += x[0].strip().ljust(wide) + "\n"
+        payload += x.strip().ljust(wide) + "\n"
     return payload.strip("\n").strip()
 
 

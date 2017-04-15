@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g transform="matrix(-0.85988046,0,0,-0.85988046,1032.4181,384.69312)">
+    <image width="1152" height="720" x="-63.4" y="-347.3"
+           xlink:href="ben.png" transform="translate(50,200)"
+           preserveAspectRatio="none"/>
+    <text id="text1" x="40" y="100" font-size="90">12345678901234567890</text>
+    <text id="text2" x="40" y="200" font-size="90">12345678901234567890</text>
+    <text id="text3" x="40" y="300" font-size="90">12345678901234567890</text>
+    <text id="text4" x="40" y="400" font-size="90">12345678901234567890</text>
+  </g>
+</svg>

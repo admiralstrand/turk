@@ -37,15 +37,17 @@ def tappy_typing():
         if ord(typed_input) == CTRL_C:
             if not LIVEMODE:
                 print "!! EJECT !! EJECT !! EJECT !!"
-                return True
+                # return True
+                yield "exit please"
 
         elif ord(typed_input) == ENTER_KEY:
             tp.svg_print(running_string)
-            # TODO: the actual sending code
-            running_string = ""
             ada1.write_to_screen("Sending")
             time.sleep(0.5)
             ada1.write_to_screen("")
+            # TODO: the actual sending code
+            yield running_string
+            running_string = ""
 
         elif tt.buffer_length(running_string) == 80:
             running_string = tt.send_complete_words(running_string)

@@ -55,9 +55,8 @@ def listen(ws):
 
 if __name__ == "__main__":
     websocket.enableTrace(True)
-    # server_address = "wss://echo.websocket.org"
-    # server_address = "ws://nameless-dusk-67549.herokuapp.com/submit"
-    server_address = "ws://localhost:5000"
+    server_address = "ws://nameless-dusk-67549.herokuapp.com/submit"
+    # server_address = "ws://localhost:5000"
 
     in_ws = websocket.WebSocketApp(server_address + "/receive",
                                    on_message=on_message,

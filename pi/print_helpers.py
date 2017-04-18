@@ -22,10 +22,11 @@ def naive_print(to_print):
     os.system(type_this)
 
 
-def svg_print(text):
+def svg_print(text, chatty=False):
     """Print an image of some text derived from an SVG."""
     svg_string = svg_template(text)
-    print svg_string
+    if chatty:
+        print svg_string
     img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 1000, 400)
     ctx = cairo.Context(img)
     # handle = rsvg.Handle(<svg filename>)
@@ -36,7 +37,7 @@ def svg_print(text):
     try:
         type_this = "lpr -o orientation-requested=3 -o fit-to-page tempPrint.png"
         os.system(type_this)
-        print "should be printing", type_this
+        print "should be printing:\n", type_this
     except Exception as e:
         print "probably on Ben's computer", e
 

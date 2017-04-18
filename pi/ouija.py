@@ -4,10 +4,20 @@ import thread
 import time
 import websocket
 import turk
+import print_helpers as tp
 
 
 def on_message(ws, message):
-    print "message", message, "\n"
+    message = json.loads(message)
+    print "*"*10, "\n\nmessage", message, "\n"
+    if message["handle"] == "turkBrain":
+        # TODO: add styled printing
+        tp.svg_print(message["text"])
+    elif message["handle"] == "turkClient":
+        # TODO: add styled printing
+        tp.svg_print(message["text"])
+    else:
+        print "someone else is on the system!\n{}".format(message)
 
 
 def on_error(ws, error):

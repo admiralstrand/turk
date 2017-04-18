@@ -3,7 +3,6 @@
 
 Code to make the turk's text input work
 """
-import print_helpers as tp
 import text_input_helpers as tt
 import time
 try:  # ben's computer
@@ -41,7 +40,6 @@ def tappy_typing():
                 yield "exit please"
 
         elif ord(typed_input) == ENTER_KEY:
-            tp.svg_print(running_string)
             ada1.write_to_screen("Sending")
             time.sleep(0.5)
             ada1.write_to_screen("")

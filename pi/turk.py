@@ -84,4 +84,5 @@ def tappy_typing():
 
 
 if __name__ == "__main__":
-    tappy_typing()
+    t = tappy_typing()
+    next(t)

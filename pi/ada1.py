@@ -3,20 +3,21 @@
 # Raspberry Pi or BeagleBone Black.
 import time
 import Adafruit_CharLCD as LCD
+# code here: https://github.com/adafruit/Adafruit_Python_CharLCD/blob/master/Adafruit_CharLCD/Adafruit_CharLCD.py
 
 # Raspberry Pi pin configuration:
-lcd_rs        = 7
-lcd_en        = 8
+lcd_rs        =  7
+lcd_en        =  8
 lcd_d4        = 25
 lcd_d5        = 24
 lcd_d6        = 23
 lcd_d7        = 18
-lcd_backlight = 4
+lcd_backlight =  4
 
 
 # Define LCD column and row size
 lcd_columns = 20
-lcd_rows    = 4
+lcd_rows    =  4
 
 
 # Initialize the LCD using the pins above.

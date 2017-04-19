@@ -6,6 +6,8 @@ import websocket
 import turk
 import print_helpers as tp
 
+LOCAL_TEST = True
+
 
 def on_message(ws, message):
     message = json.loads(message)
@@ -55,8 +57,10 @@ def listen(ws):
 
 if __name__ == "__main__":
     websocket.enableTrace(True)
-    server_address = "ws://nameless-dusk-67549.herokuapp.com/submit"
-    # server_address = "ws://localhost:5000"
+    if LOCAL_TEST:
+        server_address = "ws://localhost:5000"
+    else:
+        server_address = "ws://nameless-dusk-67549.herokuapp.com/submit"
 
     in_ws = websocket.WebSocketApp(server_address + "/receive",
                                    on_message=on_message,

@@ -9,6 +9,24 @@ except:
     import ben_shim as ada1
 
 
+def get_char():
+    a = []
+    for _ in range(3):
+        c = read_single_keypress()
+        a.append(c)
+        if a[0] != "\x1b":
+            return c
+
+    if a[2] == "A":
+        return "UP"
+    elif a[2] == "B":
+        return "DOWN"
+    elif a[2] == "C":
+        return "RIGHT"
+    elif a[2] == "D":
+        return "LEFT"
+
+
 def read_single_keypress():
     """Wait for a single keypress on stdin, then do something when it arrives.
 
@@ -153,6 +171,35 @@ def send_complete_words(running_string):
     return running_string[last_space:]
 
 
+def update_cursor_pos(typed_input, running_string,
+                      cursor_pos, wide=20, high=4):
+    l = len(running_string)
+    if cursor_pos is None:
+        if typed_input == "LEFT":
+            cursor_pos = l - 1
+    elif typed_input == "LEFT":
+        cursor_pos -= 1
+        if cursor_pos > l:
+            cursor_pos = l
+    elif typed_input == "RIGHT":
+        cursor_pos += 1
+        if cursor_pos <= 0:
+            cursor_pos = 0
+    elif typed_input == "UP" or typed_input == "DOWN":
+        print "{} not implemented yet".format(typed_input)
+
+    return clamp(cursor_pos, wide * high)
+
+
+def clamp(val, highest, lowest=0):
+    if lowest <= val <= highest:
+        return val
+    if val > highest:
+        return highest
+    if val < lowest:
+        return lowest
+
+
 def backspace(running_string):
     """Pull the last char of the string."""
     length = len(running_string)
@@ -174,8 +221,8 @@ def buffer_length(running_text):
 #     print [len(x[0]) for x in screen], screen
 
 
-def show(running_string):
+def show(running_string, cursor_pos=None, wide=20, high=4):
     """Print to console and show on lcd."""
     screen_data = break_for_wide_x_high_screen(running_string)
     screen_data = prepare_for_screen(screen_data)
-    ada1.write_to_screen(screen_data)
+    ada1.write_to_screen(screen_data, cursor_pos)

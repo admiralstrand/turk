@@ -5,11 +5,15 @@ Code to make the turk's text input work
 """
 import text_input_helpers as tt
 import time
+import math
 try:  # ben's computer
     import ada1
 except:
     print "I think I'm running on Ben's computer"
     import ben_shim as ada1
+
+WIDE = 20
+HIGH = 4
 
 LIVEMODE = False
 BACKSPACE_KEY = 127
@@ -20,7 +24,7 @@ CTRL_C = 3
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
 
-    This handles special cases, like ctrl+c to leave the programme.
+    Also handles special cases, like ctrl+c to leave the programme.
     """
     acceptableChars = tt.get_acceptable_chars()
 
@@ -29,11 +33,22 @@ def tappy_typing():
     print("start typing dood!")
 
     running_string = ""
+    cursor_pos = 0
     while True:
         print("--------------------")
-        typed_input = tt.read_single_keypress()
+        typed_input = tt.get_char()
+        print "input:", typed_input
 
-        if ord(typed_input) == CTRL_C:
+        if typed_input in ["UP", "DOWN", "RIGHT", "LEFT"]:
+            cursor_pos = tt.update_cursor_pos(typed_input,
+                                              running_string,
+                                              cursor_pos)
+            cursor_pos = tt.clamp(cursor_pos, len(running_string))
+            column = cursor_pos % WIDE
+            row = int(math.floor(cursor_pos/WIDE))
+            ada1.set_cursor(column, row)
+
+        elif ord(typed_input) == CTRL_C:
             if not LIVEMODE:
                 print "!! EJECT !! EJECT !! EJECT !!"
                 # return True
@@ -49,18 +64,23 @@ def tappy_typing():
 
         elif tt.buffer_length(running_string) == 80:
             running_string = tt.send_complete_words(running_string)
-            tt.show(running_string)
+            tt.show(running_string, cursor_pos)
 
         elif ord(typed_input) == BACKSPACE_KEY:
             running_string = tt.backspace(running_string)
-            tt.show(running_string)
+            cursor_pos -= 1
+            tt.show(running_string, cursor_pos)
 
         elif typed_input not in acceptableChars:
             print "don't be a sketchy fuck"
 
         else:
-            running_string += typed_input
-            tt.show(running_string)
+            temp_s_list = list(running_string)
+            temp_s_list.insert(cursor_pos, typed_input)
+            running_string = "".join(temp_s_list)
+            cursor_pos += 1
+
+        tt.show(running_string, cursor_pos)
 
 
 if __name__ == "__main__":

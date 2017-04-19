@@ -5,7 +5,6 @@ import math
 try:  # ben's computer
     import ada1
 except:
-    print "I think I'm running on Ben's computer"
     import ben_shim as ada1
 
 
@@ -105,26 +104,26 @@ def hyphenate(word, max_width=20):
 
     There must be a nice algoritm that's just out of reach of my brain today.
     """
-    print len(word)
+    # print len(word)
     if len(word) <= max_width:
         return word
     elif len(word) > 20 and len(word) <= 40:
         mid = int(math.floor(len(word)/2))
-        print 1, mid, "<"
+        # print 1, mid, "<"
         return word[:mid] + " " + word[mid:]
     elif len(word) > 40 and len(word) <= 58:
         # 59 is hard to handle
         mid = int(math.floor(len(word)/3))
-        print 2, mid, "<"
+        # print 2, mid, "<"
         return word[:mid] + " " + word[mid:mid*2] + " " + word[mid*2:]
     elif len(word) > 58:
         w = max_width
-        print 3, w, "<"
+        # print 3, w, "<"
         rtn = " ".join([word[:w], word[w:w*2], word[w*2:w*3], word[w*3:]])
-        print rtn
+        # print rtn
         return rtn
     else:
-        print "don't be a jerk"
+        # print "don't be a jerk"
         return word
 
 
@@ -211,14 +210,6 @@ def buffer_length(running_text):
     as_list_of_lists = break_for_wide_x_high_screen(running_text)
     as_str = prepare_for_screen(as_list_of_lists)
     return len(as_str)
-
-
-# if pretty_print:
-#     for x in screen:
-#         print "|"+x[0].strip().ljust(wide)+"|"
-#     print "-" + "+" * (wide-1) + "-"
-#     print len(typed_input), typed_input
-#     print [len(x[0]) for x in screen], screen
 
 
 def show(running_string, cursor_pos=None, wide=20, high=4):

@@ -9,7 +9,6 @@ import math
 try:  # ben's computer
     import ada1
 except:
-    print "I think I'm running on Ben's computer"
     import ben_shim as ada1
 
 WIDE = 20

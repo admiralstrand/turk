@@ -45,7 +45,7 @@ def tappy_typing():
             cursor_pos = tt.update_cursor_pos(typed_input,
                                               running_string,
                                               cursor_pos)
-            cursor_pos = tt.clamp(cursor_pos, len(running_string))
+            cursor_pos = tt.clamp(cursor_pos, len(running_string)+1)
             column = cursor_pos % WIDE
             row = int(math.floor(cursor_pos/WIDE))
             ada1.set_cursor(column, row)

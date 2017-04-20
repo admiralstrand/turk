@@ -18,7 +18,7 @@ def on_message(ws, message):
     TODO: use a different template depending on who the message is from.
     """
     message = json.loads(message)
-    print "*"*10, "\n\nmessage", message, "\n"
+    print_message_nicely(message)
     if message["handle"] == "turkBrain":
         # TODO: add styled printing
         tp.svg_print(message["text"])
@@ -51,7 +51,6 @@ def on_open(ws):
     client and back to here for the printer (see on_message).
     """
     def run(*args):
-        print "here we go"
         t = turk.tappy_typing()
         while True:
             value = next(t)
@@ -73,6 +72,14 @@ def listen(ws):
     def run(*args):
         pass
     thread.start_new_thread(run, ())
+
+
+def print_message_nicely(message):
+    """Print a message in a nice way."""
+    print "\n" + "*"*10
+    print "sender:", message["handle"]
+    print message["text"]
+    print "*"*10, "\n"
 
 
 if __name__ == "__main__":

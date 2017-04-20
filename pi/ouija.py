@@ -51,7 +51,7 @@ def on_open(ws):
     client and back to here for the printer (see on_message).
     """
     def run(*args):
-        t = turk.tappy_typing()
+        t = tappy_typing()
         while True:
             value = next(t)
             if value != "exit please":

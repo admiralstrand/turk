@@ -2,8 +2,13 @@
 """Mechanical Turk text input functions."""
 import string
 import math
+import sys
 try:  # ben's computer
-    import ada1
+    if sys.argv[1] == "local":
+        import ben_shim as ada1
+    else:
+        import ada1
+
 except:
     import ben_shim as ada1
 

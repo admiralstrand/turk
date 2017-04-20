@@ -35,7 +35,7 @@ def tappy_typing():
     print("start typing dood!")
 
     running_string = ""
-    cursor_pos = 0
+    cursor_pos = 1
     while True:
         print("--------------------")
         typed_input = tt.get_char()
@@ -68,7 +68,7 @@ def tappy_typing():
             tt.show(running_string, cursor_pos)
 
         elif ord(typed_input) == BACKSPACE_KEY:
-            running_string = tt.backspace(running_string)
+            running_string = tt.backspace(running_string, cursor_pos)
             cursor_pos -= 1
             tt.show(running_string, cursor_pos)
 

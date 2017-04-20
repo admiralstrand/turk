@@ -199,10 +199,13 @@ def clamp(val, highest, lowest=0):
         return lowest
 
 
-def backspace(running_string):
+def backspace(running_string, cursor_pos=None):
     """Pull the last char of the string."""
-    length = len(running_string)
-    return running_string[:length-1]
+    if cursor_pos:
+        return running_string[:cursor_pos-2] + running_string[cursor_pos-1:]
+    else:
+        length = len(running_string)
+        return running_string[:length-1]
 
 
 def buffer_length(running_text):

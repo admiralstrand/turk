@@ -23,7 +23,10 @@ CTRL_C = 3
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
 
-    Also handles special cases, like ctrl+c to leave the programme.
+    Also handles special cases:
+        ctrl+c to leave the programme.
+        Enter to send
+        backspace and arrow keys
     """
     acceptableChars = tt.get_acceptable_chars()
 
@@ -50,7 +53,6 @@ def tappy_typing():
         elif ord(typed_input) == CTRL_C:
             if not LIVEMODE:
                 print "!! EJECT !! EJECT !! EJECT !!"
-                # return True
                 yield "exit please"
 
         elif ord(typed_input) == ENTER_KEY:
@@ -71,7 +73,8 @@ def tappy_typing():
             tt.show(running_string, cursor_pos)
 
         elif typed_input not in acceptableChars:
-            print "don't be a sketchy fuck"
+            print "don't be sketchy.\n{} not in {}".format(typed_input,
+                                                           acceptableChars)
 
         else:
             temp_s_list = list(running_string)

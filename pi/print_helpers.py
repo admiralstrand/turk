@@ -38,15 +38,17 @@ def svg_print(text, sender=None, chatty=False):
         svg_string = svg_template(text)
     if chatty:
         print svg_string
+
     img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 1000, 400)
     ctx = cairo.Context(img)
-    # handle = rsvg.Handle(<svg filename>)
-    # or, for in memory SVG data:
     handle = rsvg.Handle(None, svg_string)
     handle.render_cairo(ctx)
     img.write_to_png("tempPrint.png")
     try:
-        type_this = "lpr -o orientation-requested=3 -o fit-to-page tempPrint.png"
+        type_this = ("lpr "
+                     "-o orientation-requested=3 "
+                     "-o fit-to-page "
+                     "tempPrint.png")
         os.system(type_this)
         print "should be printing:\n", type_this
     except Exception as e:

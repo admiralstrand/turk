@@ -6,8 +6,6 @@ import websocket
 from turk import tappy_typing
 from print_helpers import svg_print
 
-LOCAL_TEST = True
-
 
 def on_message(ws, message):
     """Print incoming message.
@@ -82,7 +80,7 @@ def print_message_nicely(message):
 
 if __name__ == "__main__":
     websocket.enableTrace(True)
-    if LOCAL_TEST:
+    if sys.argv[1] == "local":
         server_address = "ws://localhost:5000"
     else:
         server_address = "ws://nameless-dusk-67549.herokuapp.com/submit"

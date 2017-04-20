@@ -4,7 +4,7 @@ import thread
 import time
 import websocket
 from turk import tappy_typing
-import print_helpers as tp
+from print_helpers import svg_print
 
 LOCAL_TEST = True
 
@@ -21,10 +21,10 @@ def on_message(ws, message):
     print_message_nicely(message)
     if message["handle"] == "turkBrain":
         # TODO: add styled printing
-        tp.svg_print(message["text"])
+        svg_print(message["text"], sender="turkBrain")
     elif message["handle"] == "turkClient":
         # TODO: add styled printing
-        tp.svg_print(message["text"])
+        svg_print(message["text"], sender="turkClient")
     else:
         print "someone else is on the system!\n{}".format(message)
 

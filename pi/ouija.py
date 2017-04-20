@@ -3,7 +3,7 @@ import json
 import thread
 import time
 import websocket
-import turk
+from turk import tappy_typing
 import print_helpers as tp
 
 LOCAL_TEST = True

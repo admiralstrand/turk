@@ -22,9 +22,20 @@ def naive_print(to_print):
     os.system(type_this)
 
 
-def svg_print(text, chatty=False):
-    """Print an image of some text derived from an SVG."""
-    svg_string = svg_template(text)
+def svg_print(text, sender=None, chatty=False):
+    """Print an image of some text derived from an SVG.
+
+    Take an SVG template and inject the text into it.
+    Save that SVG as a PNG.
+    Print the PNG to the recipt printer using a bash command.
+    """
+    svg_string = ""
+    if sender == "turkBrain":
+        svg_string = brain_svg(text)
+    elif sender == "turkClient":
+        svg_string = client_svg(text)
+    else:
+        svg_string = svg_template(text)
     if chatty:
         print svg_string
     img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 1000, 400)
@@ -40,6 +51,24 @@ def svg_print(text, chatty=False):
         print "should be printing:\n", type_this
     except Exception as e:
         print "probably on Ben's computer", e
+
+
+def brain_svg(text):
+    """Return the SVG template suitable for the aAI's voice."""
+    # TODO: add styled printing
+    return svg_template(text)
+
+
+def client_svg(text):
+    """Return the SVG template suitable for the client's voice."""
+    # TODO: add styled printing
+    return svg_template(text)
+
+
+def plain_svg(text):
+    """Return the SVG template for when no voice is passed in."""
+    # TODO: add styled printing
+    return svg_template(text)
 
 
 def svg_template(text):

@@ -20,10 +20,8 @@ def on_message(ws, message):
     message = json.loads(message)
     print_message_nicely(message)
     if message["handle"] == "turkBrain":
-        # TODO: add styled printing
         svg_print(message["text"], sender="turkBrain")
     elif message["handle"] == "turkClient":
-        # TODO: add styled printing
         svg_print(message["text"], sender="turkClient")
     else:
         print "someone else is on the system!\n{}".format(message)

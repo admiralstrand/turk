@@ -6,13 +6,14 @@ Code to make the turk's text input work
 import text_input_helpers as tt
 import time
 import math
-import sys
+# import sys
 try:  # ben's computer
-    if sys.argv[1] == "local":
-        import ben_shim as ada1
-    else:
-        print "using the real driver"
-        import ada1
+    # if sys.argv[1] == "local":
+    #     import ben_shim as ada1
+    # else:
+    #     print "using the real driver"
+    #     import ada1
+    import ada1
 
 except:
     import ben_shim as ada1

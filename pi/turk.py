@@ -11,6 +11,7 @@ try:  # ben's computer
     if sys.argv[1] == "local":
         import ben_shim as ada1
     else:
+        print "using the real driver"
         import ada1
 
 except:

@@ -17,7 +17,7 @@ def write_to_screen(thing, cursor_pos=None, wide=20, high=4):
         cursor_pos = tt.clamp(cursor_pos, wide * high)
         column = cursor_pos % wide
         row = int(math.floor(cursor_pos/wide))
-        row = tt.clamp(row, 3)  # 80/4 is 4 but 0123 rows - overflow
+        row = tt.clamp(row, 3)  # 80/4 is 4, but 0123 rows - overflow
         top_row = top_row[:cursor_pos-1] + "|" + top_row[cursor_pos:]
         set_cursor(column, row)
         right_edge[row] = "<-"

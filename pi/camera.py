@@ -5,6 +5,7 @@ More docs here: https://picamera.readthedocs.io
 from picamera import PiCamera
 from time import sleep
 
+
 def take_a_picture(filepath="baby_charlie_sleeping.jpg"):
     camera = PiCamera()
 

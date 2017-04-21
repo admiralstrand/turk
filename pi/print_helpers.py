@@ -84,6 +84,7 @@ def svg_template(text):
       <rect width="1000" height="400" x="0" y="0"/>
     </clipPath>
   </defs>
+  <rect x="0" y="0" width="1000" height="400" fill="red" />
   <g transform="matrix(-0.85988046,0,0,-0.85988046,1032.4181,384.69312)">
     <image width="1152" height="720" x="-63.4" y="-347.3"
            xlink:href="ben.png" transform="translate(50,200)"

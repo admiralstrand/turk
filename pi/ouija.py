@@ -6,9 +6,21 @@ import time
 import websocket
 from turk import tappy_typing
 from print_helpers import svg_print
+import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
 
 
-def on_message(ws, message):
+def on_connect(client,userdata,flags,rc):
+	global topic
+	global server_address
+	global port
+	print("connected : "+str(rc))
+	client.subscribe(topic)
+	publish.single(topic, payload ="connected!", hostname=server_address, port=port)
+	#run(topic,port,server_address)
+	thread.start_new_thread(run,(topic,port,server_address))
+
+def on_message(client,userdata,msg):
     """Print incoming message.
 
     Listen to the redis PUBSUB. When a message is received,
@@ -16,22 +28,6 @@ def on_message(ws, message):
 
     TODO: use a different template depending on who the message is from.
     """
-
-def on_error(ws, error):
-    """Print the error if it occurs."""
-    print "error", error
-
-
-def on_close(ws):
-    """Do things when the connection closes."""
-    print "### closed ###"
-
-def listen(ws):
-    """Open a connection to the redis channel."""
-    def run(*args):
-        pass
-    thread.start_new_thread(run, ())
-
     print str(msg.payload)
     if (msg):
     	message =str(msg.payload)
@@ -69,22 +65,18 @@ def print_message_nicely(message):
 
 
 if __name__ == "__main__":
-    websocket.enableTrace(True)
+
     if sys.argv[1] == "local":
-        server_address = "ws://localhost:5000"
+        server_address = "localhost"
+        port=5000
     else:
-        server_address = "ws://nameless-dusk-67549.herokuapp.com/submit"
+        server_address = 'test.mosca.io'
+        port = 1883
 
-    in_ws = websocket.WebSocketApp(server_address + "/receive",
-                                   on_message=on_message,
-                                   on_error=on_error,
-                                   on_close=on_close)
-    in_ws.on_open = listen
-    thread.start_new_thread(in_ws.run_forever, ())
+	topic = 'mqtest'
 
-    out_ws = websocket.WebSocketApp(server_address + "/submit",
-                                    on_message=on_message,
-                                    on_error=on_error,
-                                    on_close=on_close)
-    out_ws.on_open = on_open
-    out_ws.run_forever()
+	client = mqtt.Client()
+	client.on_connect = on_connect
+	client.on_message = on_message
+	client.connect(server_address,port)
+	client.loop_forever()

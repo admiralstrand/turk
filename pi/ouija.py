@@ -16,15 +16,6 @@ def on_message(ws, message):
 
     TODO: use a different template depending on who the message is from.
     """
-    message = json.loads(message)
-    print_message_nicely(message)
-    if message["handle"] == "turkBrain":
-        svg_print(message["text"], sender="turkBrain")
-    elif message["handle"] == "turkClient":
-        svg_print(message["text"], sender="turkClient")
-    else:
-        print "someone else is on the system!\n{}".format(message)
-
 
 def on_error(ws, error):
     """Print the error if it occurs."""
@@ -70,6 +61,18 @@ def listen(ws):
         pass
     thread.start_new_thread(run, ())
 
+    print str(msg.payload)
+    if (msg):
+    	message =str(msg.payload)
+    	message = json.loads(message)
+    	print message
+    	print_message_nicely(message)
+    	if message["handle"] == "turkBrain":
+    		svg_print(message["text"], sender="turkBrain")
+    	elif message["handle"] == "turkClient":
+    		svg_print(message["text"], sender="turkClient")
+    	else:
+    		print "someone else is on the system!\n{}".format(message)
 
 def print_message_nicely(message):
     """Print a message in a nice way."""

@@ -26,35 +26,6 @@ def on_close(ws):
     """Do things when the connection closes."""
     print "### closed ###"
 
-
-def on_open(ws):
-    """Maintain a connection to the server.
-
-    `tappy_typing()` is a generator. It gets input from the user. When
-    the user is happy with their message, they press enter and it is
-    yielded back to this function. This function then formats the message
-    as JSON, adds a sender tag, and sends it off to the server.
-
-    The server then puts it into the redis pubsub and sends it to the web
-    client and back to here for the printer (see on_message).
-    """
-    def run(*args):
-        t = tappy_typing()
-        while True:
-            value = next(t)
-            if value != "exit please":
-                payload = json.dumps({"handle": "turkClient",
-                                      "text": value})
-            else:
-                ws.close()
-                print "thread terminating..."
-                return True
-            print "dump", payload
-            ws.send(payload)
-        time.sleep(1)
-    thread.start_new_thread(run, ())
-
-
 def listen(ws):
     """Open a connection to the redis channel."""
     def run(*args):
@@ -73,6 +44,21 @@ def listen(ws):
     		svg_print(message["text"], sender="turkClient")
     	else:
     		print "someone else is on the system!\n{}".format(message)
+
+def run(topic,port,server_address):
+    t = tappy_typing()
+    while True:
+        value = next(t)
+        if value != "exit please":
+            payload = json.dumps({"handle": "turkClient",
+                                  "text": value})
+        else:
+            ws.close()
+            print "thread terminating..."
+            return True
+        print "dump", payload
+        publish.single(topic, payload =payload, hostname=server_address, port=port)
+    time.sleep(1)
 
 def print_message_nicely(message):
     """Print a message in a nice way."""

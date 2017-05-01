@@ -11,14 +11,14 @@ import paho.mqtt.publish as publish
 
 
 def on_connect(client,userdata,flags,rc):
-	global topic
-	global server_address
-	global port
-	print("connected : "+str(rc))
-	client.subscribe(topic)
-	publish.single(topic, payload ="connected!", hostname=server_address, port=port)
-	#run(topic,port,server_address)
-	thread.start_new_thread(run,(topic,port,server_address))
+    global topic
+    global server_address
+    global port
+    print("connected : "+str(rc))
+    client.subscribe(topic)
+    publish.single(topic, payload ="connected!", hostname=server_address, port=port)
+    #run(topic,port,server_address)
+    thread.start_new_thread(run,(topic,port,server_address))
 
 def on_message(client,userdata,msg):
     """Print incoming message.
@@ -30,16 +30,16 @@ def on_message(client,userdata,msg):
     """
     print str(msg.payload)
     if (msg):
-    	message =str(msg.payload)
-    	message = json.loads(message)
-    	print message
-    	print_message_nicely(message)
-    	if message["handle"] == "turkBrain":
-    		svg_print(message["text"], sender="turkBrain")
-    	elif message["handle"] == "turkClient":
-    		svg_print(message["text"], sender="turkClient")
-    	else:
-    		print "someone else is on the system!\n{}".format(message)
+        message =str(msg.payload)
+        message = json.loads(message)
+        print message
+        print_message_nicely(message)
+        if message["handle"] == "turkBrain":
+            svg_print(message["text"], sender="turkBrain")
+        elif message["handle"] == "turkClient":
+            svg_print(message["text"], sender="turkClient")
+        else:
+            print "someone else is on the system!\n{}".format(message)
 
 def run(topic,port,server_address):
     t = tappy_typing()
@@ -73,10 +73,10 @@ if __name__ == "__main__":
         server_address = 'test.mosca.io'
         port = 1883
 
-	topic = 'mqtest'
+    topic = 'mqtest'
 
-	client = mqtt.Client()
-	client.on_connect = on_connect
-	client.on_message = on_message
-	client.connect(server_address,port)
-	client.loop_forever()
+    client = mqtt.Client()
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.connect(server_address,port)
+    client.loop_forever()

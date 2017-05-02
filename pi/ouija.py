@@ -14,7 +14,7 @@ def on_connect(client,userdata,flags,rc):
     global topic
     global server_address
     global port
-    print("connected : "+str(rc))
+    print("connected : " + str(rc))
     client.subscribe(topic)
     publish.single(topic, payload ="connected!", hostname=server_address, port=port)
     #run(topic,port,server_address)

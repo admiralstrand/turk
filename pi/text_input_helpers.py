@@ -138,7 +138,7 @@ def break_for_wide_x_high_screen(typed_input, wide=20, high=4):
     row = 0
     words = typed_input.split()
     words = " ".join([hyphenate(x) for x in words]).split()
-    print words
+    # print words
     for word in words:
         if len(screen[row]) + len(word) <= wide:
             screen[row] += (word + " ")

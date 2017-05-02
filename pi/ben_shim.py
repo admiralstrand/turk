@@ -28,4 +28,5 @@ def write_to_screen(thing, cursor_pos=None, wide=20, high=4):
 
 def set_cursor(col, row):
     """Pretend to set the cursor position."""
-    print row, ",", col
+    # print "cursor:", row, ",", col
+    pass

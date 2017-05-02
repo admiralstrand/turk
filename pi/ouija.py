@@ -3,36 +3,40 @@ import json
 import sys
 import thread
 import time
-import websocket
+# import websocket
 from turk import tappy_typing
 from print_helpers import svg_print
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 
 
-def on_connect(client,userdata,flags,rc):
+def on_connect(client, userdata, flags, rc):
+    """Handle connection."""
     global topic
     global server_address
     global port
     print("connected : " + str(rc))
     client.subscribe(topic)
-    publish.single(topic, payload ="connected!", hostname=server_address, port=port)
-    #run(topic,port,server_address)
-    thread.start_new_thread(run,(topic,port,server_address))
+    publish.single(topic,
+                   payload="connected!",
+                   hostname=server_address,
+                   port=port)
+    # run(topic,port,server_address)
+    thread.start_new_thread(run, (topic, port, server_address))
 
-def on_message(client,userdata,msg):
-    """Print incoming message.
 
-    Listen to the redis PUBSUB. When a message is received,
-    print it to the recipt printer.
-
-    TODO: use a different template depending on who the message is from.
-    """
-    print str(msg.payload)
+def on_message(client, userdata, msg):
+    """Print incoming message."""
+    # print str(msg.payload)
     if (msg):
-        message =str(msg.payload)
-        message = json.loads(message)
-        print message
+        message = str(msg.payload)
+        try:
+            message = json.loads(message)
+        except ValueError:
+            message = {"text": message,
+                       "handle": "turkBrain"}
+        except Exception as e:
+            print e
         print_message_nicely(message)
         if message["handle"] == "turkBrain":
             svg_print(message["text"], sender="turkBrain")
@@ -40,8 +44,15 @@ def on_message(client,userdata,msg):
             svg_print(message["text"], sender="turkClient")
         else:
             print "someone else is on the system!\n{}".format(message)
+        print "\n\rwaiting for more input:\r"
 
-def run(topic,port,server_address):
+
+def run(topic, port, server_address):
+    """Run the session.
+
+    tappy_typing is a generator, it hands control over to the input code when
+    it's running then the generator hands it back with a message.
+    """
     t = tappy_typing()
     while True:
         value = next(t)
@@ -49,12 +60,16 @@ def run(topic,port,server_address):
             payload = json.dumps({"handle": "turkClient",
                                   "text": value})
         else:
-            ws.close()
+            # ws.close()
             print "thread terminating..."
             return True
         print "dump", payload
-        publish.single(topic, payload =payload, hostname=server_address, port=port)
+        publish.single(topic,
+                       payload=payload,
+                       hostname=server_address,
+                       port=port)
     time.sleep(1)
+
 
 def print_message_nicely(message):
     """Print a message in a nice way."""
@@ -68,7 +83,7 @@ if __name__ == "__main__":
 
     if sys.argv[1] == "local":
         server_address = "localhost"
-        port=5000
+        port = 5000
     else:
         server_address = 'test.mosca.io'
         port = 1883
@@ -78,5 +93,5 @@ if __name__ == "__main__":
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
-    client.connect(server_address,port)
+    client.connect(server_address, port)
     client.loop_forever()

@@ -46,7 +46,7 @@ def tappy_typing():
     while True:
         print("--------------------")
         typed_input = tt.get_char()
-        print "input:", typed_input
+        # print "input:", typed_input
 
         if typed_input in ["UP", "DOWN", "RIGHT", "LEFT"]:
             cursor_pos = tt.update_cursor_pos(typed_input,

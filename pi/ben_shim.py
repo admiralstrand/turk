@@ -13,6 +13,7 @@ def write_to_screen(thing, cursor_pos=None, wide=20, high=4):
     right_edge = list("|" * 4)
     top_row = "-" * 20
 
+    message = ""
     if cursor_pos:
         cursor_pos = tt.clamp(cursor_pos, wide * high)
         column = cursor_pos % wide
@@ -21,11 +22,13 @@ def write_to_screen(thing, cursor_pos=None, wide=20, high=4):
         top_row = top_row[:cursor_pos-1] + "|" + top_row[cursor_pos:]
         set_cursor(column, row)
         right_edge[row] = "<-"
-    print "|" + top_row
+    message += "|" + top_row + "\n"
     for i, line in enumerate(lines_of_text):
-        print "|" + line + right_edge[i]
+        message += "|" + line + right_edge[i] + "\n"
+    print message
 
 
 def set_cursor(col, row):
     """Pretend to set the cursor position."""
-    print row, ",", col
+    # print "cursor:", row, ",", col
+    pass

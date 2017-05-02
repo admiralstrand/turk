@@ -22,7 +22,7 @@ def naive_print(to_print):
     os.system(type_this)
 
 
-def svg_print(text, sender=None, chatty=False):
+def svg_print(text, sender=None, chatty=False, save_svg=True):
     """Print an image of some text derived from an SVG.
 
     Take an SVG template and inject the text into it.
@@ -43,6 +43,10 @@ def svg_print(text, sender=None, chatty=False):
     ctx = cairo.Context(img)
     handle = rsvg.Handle(None, svg_string)
     handle.render_cairo(ctx)
+    if save_svg:
+        svg_file = open(sender + ".svg", 'w')
+        svg_file.write(svg_string)
+        svg_file.close()
     img.write_to_png("tempPrint.png")
     try:
         type_this = ("lpr "

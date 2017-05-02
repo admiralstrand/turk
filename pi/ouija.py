@@ -58,10 +58,10 @@ def run(topic,port,server_address):
 
 def print_message_nicely(message):
     """Print a message in a nice way."""
-    print "\n" + "*"*10
-    print "sender:", message["handle"]
-    print message["text"]
-    print "*"*10, "\n"
+    print ("\n\r" + "*"*10 + "\n" +
+           "\rsender:  " + message["handle"] + "\n" +
+           "\rmessage: " + message["text"] + "\n\r" +
+           "*"*10 + "\n")
 
 
 if __name__ == "__main__":

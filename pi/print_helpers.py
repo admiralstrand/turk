@@ -62,13 +62,13 @@ def svg_print(text, sender=None, chatty=False, save_svg=True):
 def brain_svg(text):
     """Return the SVG template suitable for the aAI's voice."""
     # TODO: add styled printing
-    return svg_template(text)
+    return svg_template(text, font="Ceria Lebaran")
 
 
 def client_svg(text):
     """Return the SVG template suitable for the client's voice."""
     # TODO: add styled printing
-    return svg_template(text)
+    return svg_template(text, font="Martienso")
 
 
 def plain_svg(text):
@@ -77,7 +77,7 @@ def plain_svg(text):
     return svg_template(text)
 
 
-def svg_template(text):
+def svg_template(text, font=""):
     """Provide an svg for the printer to print."""
     text = tt.break_for_wide_x_high_screen(text)
     template = u"""
@@ -88,22 +88,23 @@ def svg_template(text):
       <rect width="1000" height="400" x="0" y="0"/>
     </clipPath>
   </defs>
-  <rect x="0" y="0" width="1000" height="400" fill="red" />
+  <rect x="0" y="0" width="1000" height="400" fill="none" stroke="red" stroke-width="3" />
   <g transform="matrix(-0.85988046,0,0,-0.85988046,1032.4181,384.69312)">
     <image width="1152" height="720" x="-63.4" y="-347.3"
            xlink:href="ben.png" transform="translate(50,200)"
            clip-path="url(#a)" preserveAspectRatio="none"/>
-    <text x="40" y="100" font-size="90">{line1}</text>
-    <text x="40" y="200" font-size="90">{line2}</text>
-    <text x="40" y="300" font-size="90">{line3}</text>
-    <text x="40" y="400" font-size="90">{line4}</text>
+    <text x="60" y="100" font-size="90" font-family="{font}">{line1}</text>
+    <text x="60" y="200" font-size="90" font-family="{font}">{line2}</text>
+    <text x="60" y="300" font-size="90" font-family="{font}">{line3}</text>
+    <text x="60" y="400" font-size="90" font-family="{font}">{line4}</text>
   </g>
 </svg>
 """
     return template.format(line1=text[0],
                            line2=text[1],
                            line3=text[2],
-                           line4=text[3])
+                           line4=text[3],
+                           font=font)
 
 
 if __name__ == "__main__":

@@ -62,13 +62,13 @@ def svg_print(text, sender=None, chatty=False, save_svg=True):
 def brain_svg(text):
     """Return the SVG template suitable for the aAI's voice."""
     # TODO: add styled printing
-    return svg_template(text, font="Ceria Lebaran")
+    return svg_template(text, font="Ceria Lebaran", font_size=90)
 
 
 def client_svg(text):
     """Return the SVG template suitable for the client's voice."""
     # TODO: add styled printing
-    return svg_template(text, font="Martienso")
+    return svg_template(text, font="Martienso", font_size=130)
 
 
 def plain_svg(text):
@@ -77,7 +77,7 @@ def plain_svg(text):
     return svg_template(text)
 
 
-def svg_template(text, font=""):
+def svg_template(text, font="", font_size=90):
     """Provide an svg for the printer to print."""
     text = tt.break_for_wide_x_high_screen(text)
     template = u"""
@@ -93,10 +93,10 @@ def svg_template(text, font=""):
     <image width="1152" height="720" x="-63.4" y="-347.3"
            xlink:href="ben.png" transform="translate(50,200)"
            clip-path="url(#a)" preserveAspectRatio="none"/>
-    <text x="60" y="100" font-size="90" font-family="{font}">{line1}</text>
-    <text x="60" y="200" font-size="90" font-family="{font}">{line2}</text>
-    <text x="60" y="300" font-size="90" font-family="{font}">{line3}</text>
-    <text x="60" y="400" font-size="90" font-family="{font}">{line4}</text>
+    <text x="60" y="100" font-size="{font_size}" font-family="{font}">{line1}</text>
+    <text x="60" y="200" font-size="{font_size}" font-family="{font}">{line2}</text>
+    <text x="60" y="300" font-size="{font_size}" font-family="{font}">{line3}</text>
+    <text x="60" y="400" font-size="{font_size}" font-family="{font}">{line4}</text>
   </g>
 </svg>
 """
@@ -104,7 +104,8 @@ def svg_template(text, font=""):
                            line2=text[1],
                            line3=text[2],
                            line4=text[3],
-                           font=font)
+                           font=font,
+                           font_size=font_size)
 
 
 if __name__ == "__main__":

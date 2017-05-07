@@ -41,7 +41,16 @@ def remote_command(message):
                     exposure_mode = p[1]
                 if p[0] == "mode_or_iso":
                     mode_or_iso = p[1]
+        print "settings requested:", m[0]
+        print "settings now:"
+        print "iso {}, exposure_mode {}, mode_or_iso {}".format(iso,
+                                                                exposure_mode,
+                                                                mode_or_iso)
     if m[0] in ["/photo", "/pic", "/picture"]:
+        print "taking a pic with settings:"
+        print "iso {}, exposure_mode {}, mode_or_iso {}".format(iso,
+                                                                exposure_mode,
+                                                                mode_or_iso)
         take_a_picture(filepath="live.jpg",
                        exposure_mode=exposure_mode,
                        iso=iso,
@@ -97,6 +106,10 @@ def run(topic, port, server_address):
     t = tappy_typing()
     while True:
         value = next(t)
+        print "taking a pic with settings:"
+        print "iso {}, exposure_mode {}, mode_or_iso {}".format(iso,
+                                                                exposure_mode,
+                                                                mode_or_iso)
         take_a_picture(filepath="live.jpg",  # values from globals
                        exposure_mode=exposure_mode,
                        iso=iso,

@@ -5,8 +5,10 @@ import math
 # import sys
 try:
     import ada1
+    on_ben = False
 except:
     import ben_shim as ada1
+    on_ben = True
 
 
 def get_char():
@@ -224,7 +226,8 @@ def show(running_string, cursor_pos=None, wide=20, high=4):
     screen_data = break_for_wide_x_high_screen(running_string)
     screen_data = prepare_for_screen(screen_data)
     ada1.write_to_screen(screen_data, cursor_pos)
-    preview(screen_data, cursor_pos)
+    if not on_ben:
+        preview(screen_data, cursor_pos)
 
 
 def preview(thing, cursor_pos=None, wide=20, high=4):

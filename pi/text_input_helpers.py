@@ -14,6 +14,7 @@ except:
 
 
 def get_char():
+    """Get the key pressed, also handle arrow keys."""
     a = []
     for _ in range(3):
         c = read_single_keypress()

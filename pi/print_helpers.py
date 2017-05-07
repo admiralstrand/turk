@@ -31,7 +31,11 @@ def print_pic():
     os.system(type_this)
 
 
-def svg_print(text, sender=None, chatty=False, save_svg=True):
+def svg_print(text,
+              sender=None,
+              chatty=False,
+              save_svg=True,
+              direction=1):
     """Print an image of some text derived from an SVG.
 
     Take an SVG template and inject the text into it.
@@ -61,7 +65,7 @@ def svg_print(text, sender=None, chatty=False, save_svg=True):
     img.write_to_png("tempPrint.png")
     try:
         type_this = ("lpr "
-                     "-o orientation-requested=3 "
+                     "-o orientation-requested=" + direction + " "
                      "-o fit-to-page "
                      "tempPrint.png")
         os.system(type_this)

@@ -17,6 +17,7 @@ import paho.mqtt.publish as publish
 iso = 200
 exposure_mode = 'verylong'
 mode_or_iso = "iso"
+print_direction = 1  # TODO: make this make sense
 
 
 def remote_command(message):
@@ -26,7 +27,7 @@ def remote_command(message):
 
     e.g. from the interface
         settings
-            /set|iso:1600,exposure_mode:night,mode_or_iso:iso
+            /set|iso:1600,exposure_mode:night,mode_or_iso:iso,print_direction:1
         take a picture
             /picture
             /pic
@@ -46,6 +47,7 @@ def remote_command(message):
         global iso
         global exposure_mode
         global mode_or_iso
+        global print_direction
         if len(m) > 1:
             pairs = m[1].split(",")
             for pair in pairs:
@@ -56,6 +58,8 @@ def remote_command(message):
                     exposure_mode = p[1]
                 if p[0] == "mode_or_iso":
                     mode_or_iso = p[1]
+                if p[0] == "print_direction":
+                    print_direction = p[1]
         print "settings requested:", m[0]
         print "settings now:"
         print "iso {}, exposure_mode {}, mode_or_iso {}".format(iso,
@@ -104,9 +108,13 @@ def on_message(client, userdata, msg):
             if message["text"][0] == "/":
                 remote_command(message["text"])
             else:
-                svg_print(message["text"], sender="turkBrain")
+                svg_print(message["text"],
+                          sender="turkBrain",
+                          direction=print_direction)
         elif message["handle"] == "turkClient":
-            svg_print(message["text"], sender="turkClient")
+            svg_print(message["text"],
+                      sender="turkClient",
+                      direction=print_direction)
         else:
             print "someone else is on the system!\n{}".format(message)
         print "\n\rwaiting for more input:\r"

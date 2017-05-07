@@ -10,6 +10,7 @@ def take_a_picture(filepath="baby_charlie_sleeping.jpg",
                    exposure_mode='verylong',
                    iso=1600,
                    mode_or_iso="iso"):
+    """Take a picture."""
     camera = PiCamera()
 
     sleep(2)

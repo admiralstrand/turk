@@ -24,13 +24,23 @@ def remote_command(message):
 
     This allows for the brain to set commands on the pi, remotely.
 
-    # remote_command("/set|iso:1600,exposure_mode:night,mode_or_iso:iso")
+    e.g. from the interface
+        settings
+            /set|iso:1600,exposure_mode:night,mode_or_iso:iso
+        take a picture
+            /picture
+            /pic
+            /photo
+        print a picture
+            /pp
+            /print pic
+            /print picture
     """
     m = message.split("|")
     if m[0][0] != "/":
         print "something not right, command called with a non command", message
         raise
-    if m[0] in ["/pp", "/print pic"]:
+    if m[0] in ["/pp", "/print pic", "/print picture" ]:
         print_pic()
     if m[0] in ["/set", "/settings"]:
         global iso

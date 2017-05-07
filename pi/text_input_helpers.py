@@ -3,12 +3,8 @@
 import string
 import math
 # import sys
-try:  # ben's computer
-    # if sys.argv[1] == "local":
-    #     import ben_shim as ada1
-    # else:
+try:
     import ada1
-
 except:
     import ben_shim as ada1
 

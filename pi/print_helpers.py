@@ -28,7 +28,7 @@ def naive_print(to_print):
 def print_pic():
     """Print the last picture taken."""
     type_this = ("lpr "
-                 "-o orientation-requested=3 "
+                 "-o orientation-requested=4 "
                  "-o fit-to-page "
                  "live.jpg")
     os.system(type_this)

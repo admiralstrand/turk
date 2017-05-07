@@ -6,6 +6,7 @@ import time
 # import websocket
 from turk import tappy_typing
 from print_helpers import svg_print
+from print_helpers import print_pic
 try:
     from camera import take_a_picture
 except:
@@ -29,6 +30,8 @@ def remote_command(message):
     if m[0][0] != "/":
         print "something not right, command called with a non command", message
         raise
+    if m[0] in ["/pp", "/print pic"]:
+        print_pic()
     if m[0] in ["/set", "/settings"]:
         global iso
         global exposure_mode

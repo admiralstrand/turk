@@ -22,6 +22,15 @@ def naive_print(to_print):
     os.system(type_this)
 
 
+def print_pic():
+    """Print the last picture taken."""
+    type_this = ("lpr "
+                 "-o orientation-requested=3 "
+                 "-o fit-to-page "
+                 "live.jpg")
+    os.system(type_this)
+
+
 def svg_print(text, sender=None, chatty=False, save_svg=True):
     """Print an image of some text derived from an SVG.
 

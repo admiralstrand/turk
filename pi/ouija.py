@@ -130,7 +130,7 @@ if __name__ == "__main__":
             server_address = "localhost"
             port = 5000
     except:
-        print "Running live (or at leat trying)."
+        print "Running live (or at least trying)."
         server_address = 'test.mosca.io'
         port = 1883
 

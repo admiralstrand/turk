@@ -34,6 +34,6 @@ def set_cursor(col, row):
     pass
 
 
-def take_a_picture(*args):
+def take_a_picture(*args, **kwargs):
     """Spoof taking a picture."""
-    print "taking a picture, put not really", args
+    print "taking a picture (but not really)", args, kwargs

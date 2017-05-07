@@ -74,7 +74,7 @@ def on_message(client, userdata, msg):
             print e
         print_message_nicely(message)
         if message["handle"] == "turkBrain":
-            if message[0] == "/":
+            if message["text"][0] == "/":
                 remote_command(message)
             else:
                 svg_print(message["text"], sender="turkBrain")

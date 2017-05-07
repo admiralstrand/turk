@@ -44,7 +44,6 @@ def tappy_typing():
     running_string = ""
     cursor_pos = 1
     while True:
-        print("--------------------")
         typed_input = tt.get_char()
         # print "input:", typed_input
 

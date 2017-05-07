@@ -12,10 +12,10 @@ def take_a_picture(filepath="baby_charlie_sleeping.jpg",
                    mode_or_iso="iso"):
     camera = PiCamera()
 
-    camera.start_preview()
     sleep(2)
+    # camera.start_preview()
     camera.capture(filepath)
-    camera.stop_preview()
+    # camera.stop_preview()
 
 
 if __name__ == "__main__":

@@ -6,7 +6,10 @@ from picamera import PiCamera
 from time import sleep
 
 
-def take_a_picture(filepath="baby_charlie_sleeping.jpg"):
+def take_a_picture(filepath="baby_charlie_sleeping.jpg",
+                   exposure_mode='verylong',
+                   iso=1600,
+                   mode_or_iso="iso"):
     camera = PiCamera()
 
     camera.start_preview()

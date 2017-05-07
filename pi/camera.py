@@ -12,11 +12,15 @@ def take_a_picture(filepath="baby_charlie_sleeping.jpg",
                    mode_or_iso="iso"):
     """Take a picture."""
     camera = PiCamera()
-
-    sleep(2)
+    sleep(1)
+    if mode_or_iso == "mode":
+        camera.exposure_mode = exposure_mode
+    elif mode_or_iso == "iso":
+        camera.iso = iso
     # camera.start_preview()
     camera.capture(filepath)
     # camera.stop_preview()
+    camera.close()
 
 
 if __name__ == "__main__":

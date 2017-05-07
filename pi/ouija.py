@@ -6,7 +6,10 @@ import time
 # import websocket
 from turk import tappy_typing
 from print_helpers import svg_print
-from camera import take_a_picture
+try:
+    from camera import take_a_picture
+except:
+    from ben_shim import take_a_picture
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 

@@ -32,3 +32,8 @@ def set_cursor(col, row):
     """Pretend to set the cursor position."""
     # print "cursor:", row, ",", col
     pass
+
+
+def take_a_picture(*args):
+    """Spoof taking a picture."""
+    print "taking a picture, put not really", args

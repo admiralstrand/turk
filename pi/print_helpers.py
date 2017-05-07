@@ -106,7 +106,7 @@ def svg_template(text, font="", font_size=90):
   <rect x="0" y="0" width="1000" height="400"
         fill="red" stroke="red" stroke-width="3" />
   <rect x="0" y="400" width="1000" height="600"
-        fill="black" stroke="red" stroke-width="3" />
+        fill="green" stroke="red" stroke-width="3" />
   <g transform="matrix(-0.85988046,0,0,-0.85988046,1032.4181,384.69312)">
     <image width="1152" height="720" x="-63.4" y="-347.3"
            xlink:href="ben.png" transform="translate(50,200)"

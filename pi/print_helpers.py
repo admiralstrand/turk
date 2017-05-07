@@ -31,8 +31,10 @@ def svg_print(text, sender=None, chatty=False, save_svg=True):
     """
     svg_string = ""
     if sender == "turkBrain":
+        print "printing as turkBrain:\n"
         svg_string = brain_svg(text)
     elif sender == "turkClient":
+        print "printing as turkClient:\n"
         svg_string = client_svg(text)
     else:
         svg_string = svg_template(text)

@@ -122,11 +122,12 @@ def print_message_nicely(message):
 
 
 if __name__ == "__main__":
-
-    if sys.argv[1] == "local":
-        server_address = "localhost"
-        port = 5000
-    else:
+    try:
+        if sys.argv[1] == "local":
+            server_address = "localhost"
+            port = 5000
+    except:
+        print "Running live (or at leat trying)."
         server_address = 'test.mosca.io'
         port = 1883
 

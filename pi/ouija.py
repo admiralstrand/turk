@@ -22,6 +22,8 @@ def remote_command(message):
     """Respond to commands from the brain.
 
     This allows for the brain to set commands on the pi, remotely.
+
+    # remote_command("/set|iso:1600,exposure_mode:night,mode_or_iso:iso")
     """
     m = message.split("|")
     if m[0][0] != "/":
@@ -154,5 +156,3 @@ if __name__ == "__main__":
     client.on_message = on_message
     client.connect(server_address, port)
     client.loop_forever()
-
-    # remote_command("/picture|iso:1600,exposure_mode:night,mode_or_iso:iso")

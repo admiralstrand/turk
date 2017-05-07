@@ -12,6 +12,9 @@ import os
 import rsvg
 import text_input_helpers as tt
 
+WIDTH = 1000
+HEIGHT = 1000
+
 
 def naive_print(to_print):
     """Print text simply."""
@@ -54,7 +57,7 @@ def svg_print(text,
     if chatty:
         print svg_string
 
-    img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 1000, 400)
+    img = cairo.ImageSurface(cairo.FORMAT_ARGB32, WIDTH, HEIGHT)
     ctx = cairo.Context(img)
     handle = rsvg.Handle(None, svg_string)
     handle.render_cairo(ctx)
@@ -96,7 +99,7 @@ def svg_template(text, font="", font_size=90):
     """Provide an svg for the printer to print."""
     text = tt.break_for_wide_x_high_screen(text)
     template = u"""
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000"
+<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}"
      xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <clipPath id="a">
@@ -127,7 +130,9 @@ def svg_template(text, font="", font_size=90):
                            line3=text[2],
                            line4=text[3],
                            font=font,
-                           font_size=font_size)
+                           font_size=font_size,
+                           w=WIDTH,
+                           h=HEIGHT)
 
 
 if __name__ == "__main__":

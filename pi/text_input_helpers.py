@@ -174,6 +174,7 @@ def send_complete_words(running_string):
 
 def update_cursor_pos(typed_input, running_string,
                       cursor_pos, wide=20, high=4):
+    """"Manage the cursor, returns new position in grid."""
     l = len(running_string)
     if cursor_pos is None:
         if typed_input == "LEFT":
@@ -193,6 +194,7 @@ def update_cursor_pos(typed_input, running_string,
 
 
 def clamp(val, highest, lowest=0):
+    """Return value clipped by bounds."""
     if lowest <= val <= highest:
         return val
     if val > highest:

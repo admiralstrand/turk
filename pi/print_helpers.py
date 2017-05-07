@@ -65,7 +65,7 @@ def svg_print(text,
     img.write_to_png("tempPrint.png")
     try:
         type_this = ("lpr "
-                     "-o orientation-requested=" + direction + " "
+                     "-o orientation-requested=" + str(direction) + " "
                      "-o fit-to-page "
                      "tempPrint.png")
         os.system(type_this)

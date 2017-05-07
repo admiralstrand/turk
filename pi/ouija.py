@@ -6,8 +6,43 @@ import time
 # import websocket
 from turk import tappy_typing
 from print_helpers import svg_print
+from camera import take_a_picture
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
+
+iso = 200
+exposure_mode = 'verylong'
+mode_or_iso = "iso"
+
+
+def remote_command(message):
+    """Respond to commands from the brain.
+
+    This allows for the brain to set commands on the pi, remotely.
+    """
+    m = message.split("|")
+    if m[0][0] != "/":
+        print "something not right, command called with a non command", message
+        raise
+    if m[0] in ["/photo", "/pic", "/picture"]:
+        take_a_picture(filepath="live.jpg",
+                       exposure_mode=exposure_mode,
+                       iso=iso,
+                       mode_or_iso=mode_or_iso)
+    if m[0] in ["/set", "/settings"]:
+        global iso
+        global exposure_mode
+        global mode_or_iso
+        if len(m) > 1:
+            pairs = m[1].split(",")
+            for pair in pairs:
+                p = pair.split(":")
+                if p[0] == "iso":
+                    iso = int(p[1])
+                if p[0] == "exposure_mode":
+                    exposure_mode = p[1]
+                if p[0] == "mode_or_iso":
+                    mode_or_iso = p[1]
 
 
 def on_connect(client, userdata, flags, rc):
@@ -39,7 +74,10 @@ def on_message(client, userdata, msg):
             print e
         print_message_nicely(message)
         if message["handle"] == "turkBrain":
-            svg_print(message["text"], sender="turkBrain")
+            if message[0] == "/":
+                remote_command(message)
+            else:
+                svg_print(message["text"], sender="turkBrain")
         elif message["handle"] == "turkClient":
             svg_print(message["text"], sender="turkClient")
         else:
@@ -56,6 +94,10 @@ def run(topic, port, server_address):
     t = tappy_typing()
     while True:
         value = next(t)
+        take_a_picture(filepath="live.jpg",  # values from globals
+                       exposure_mode=exposure_mode,
+                       iso=iso,
+                       mode_or_iso=mode_or_iso)
         if value != "exit please":
             payload = json.dumps({"handle": "turkClient",
                                   "text": value})
@@ -95,3 +137,5 @@ if __name__ == "__main__":
     client.on_message = on_message
     client.connect(server_address, port)
     client.loop_forever()
+
+    # remote_command("/picture|iso:1600,exposure_mode:night,mode_or_iso:iso")

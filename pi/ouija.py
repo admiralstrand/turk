@@ -24,11 +24,6 @@ def remote_command(message):
     if m[0][0] != "/":
         print "something not right, command called with a non command", message
         raise
-    if m[0] in ["/photo", "/pic", "/picture"]:
-        take_a_picture(filepath="live.jpg",
-                       exposure_mode=exposure_mode,
-                       iso=iso,
-                       mode_or_iso=mode_or_iso)
     if m[0] in ["/set", "/settings"]:
         global iso
         global exposure_mode
@@ -43,6 +38,11 @@ def remote_command(message):
                     exposure_mode = p[1]
                 if p[0] == "mode_or_iso":
                     mode_or_iso = p[1]
+    if m[0] in ["/photo", "/pic", "/picture"]:
+        take_a_picture(filepath="live.jpg",
+                       exposure_mode=exposure_mode,
+                       iso=iso,
+                       mode_or_iso=mode_or_iso)
 
 
 def on_connect(client, userdata, flags, rc):

@@ -95,7 +95,7 @@ def plain_svg(text):
     return svg_template(text)
 
 
-def svg_template(text, font="", font_size=90):
+def svg_template(text, font="", font_size=90, stroke="silver", fill="none"):
     """Provide an svg for the printer to print."""
     text = tt.break_for_wide_x_high_screen(text)
     template = u"""
@@ -107,13 +107,10 @@ def svg_template(text, font="", font_size=90):
     </clipPath>
   </defs>
   <rect x="0" y="0" width="1000" height="400"
-        fill="red" stroke="red" stroke-width="3" />
+        fill="{fill}" stroke="{stroke}" stroke-width="3" />
   <rect x="0" y="400" width="1000" height="600"
-        fill="green" stroke="red" stroke-width="3" />
+        fill="{fill}" stroke="{stroke}" stroke-width="3" />
   <g transform="matrix(-0.85988046,0,0,-0.85988046,1032.4181,384.69312)">
-    <image width="1152" height="720" x="-63.4" y="-347.3"
-           xlink:href="ben.png" transform="translate(50,200)"
-           clip-path="url(#a)" preserveAspectRatio="none"/>
     <text x="60" y="100" font-size="{font_size}"
           font-family="{font}">{line1}</text>
     <text x="60" y="200" font-size="{font_size}"
@@ -132,7 +129,9 @@ def svg_template(text, font="", font_size=90):
                            font=font,
                            font_size=font_size,
                            w=WIDTH,
-                           h=HEIGHT)
+                           h=HEIGHT,
+                           stroke=stroke,
+                           fill=fill)
 
 
 if __name__ == "__main__":

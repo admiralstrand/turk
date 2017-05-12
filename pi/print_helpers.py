@@ -7,7 +7,9 @@ echo "This is a test." | lpr
 or for image:
 lpr -o fit-to-page /usr/share/raspberrypi-artwork/raspberry-pi-logo.png
 """
+from shutil import copyfile
 import cairo
+import datetime
 import os
 import requests
 import rsvg
@@ -33,6 +35,22 @@ def print_pic():
                  "-o fit-to-page "
                  "live.jpg")
     os.system(type_this)
+    file_name = "history/{}.jpg".format(timestamp())
+    copyfile("live.jpg", file_name)
+    log("saved " + file_name)
+
+
+def timestamp():
+    """Return a string timestamp."""
+    a = datetime.datetime.utcnow()
+    return a.strftime("%Y-%m-%d_%H:%M")
+
+
+def log(message):
+    """Add to the log of what was said and printed."""
+    history_book = open("history/log.txt", "a")
+    history_book.write("\n{}:  {}".format(timestamp(), message))
+    history_book.close()
 
 
 def print_remote_pic(url):
@@ -58,9 +76,11 @@ def svg_print(text,
     if sender == "turkBrain":
         print "printing as turkBrain:\n"
         svg_string = brain_svg(text)
+        log("turkBrain:   {}".format(text))
     elif sender == "turkClient":
         print "printing as turkClient:\n"
         svg_string = client_svg(text)
+        log("turkClient:  {}".format(text))
     else:
         svg_string = svg_template(text)
     if chatty:

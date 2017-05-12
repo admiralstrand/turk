@@ -39,7 +39,7 @@ def remote_command(message):
             /print pic
             /print picture
         print a picture from the web
-            /weppic
+            /webpic
             /wp
     """
     m = message.split("|")

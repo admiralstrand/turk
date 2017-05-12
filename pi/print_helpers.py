@@ -37,7 +37,7 @@ def print_pic():
     os.system(type_this)
     file_name = "history/{}.jpg".format(timestamp())
     copyfile("live.jpg", file_name)
-    log("saved " + file_name)
+    log("printed " + file_name)
 
 
 def timestamp():

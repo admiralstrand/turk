@@ -30,7 +30,7 @@ def remote_command(message):
     This allows for the brain to set commands on the pi, remotely.
 
     e.g. from the interface
-        settings
+        settings (can be any or all of the k:v pairs)
             /set|iso:1600,exposure_mode:night,mode_or_iso:iso,print_direction:1
         take a picture
             /picture

@@ -23,7 +23,7 @@ def take_a_picture(filepath="live.jpg",
         camera.exposure_mode = exposure_mode
     elif mode_or_iso == "iso":
         camera.iso = iso
-    camera.brightness(brightness)
+    camera.brightness = brightness
     # camera.start_preview()
     camera.capture(filepath)
     # camera.stop_preview()

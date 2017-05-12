@@ -80,13 +80,13 @@ def svg_print(text,
 def brain_svg(text):
     """Return the SVG template suitable for the aAI's voice."""
     # TODO: add styled printing
-    return svg_template(text, font="Ceria Lebaran", font_size=90)
+    return svg_template(text, font="Ceria Lebaran", font_size=150)
 
 
 def client_svg(text):
     """Return the SVG template suitable for the client's voice."""
     # TODO: add styled printing
-    return svg_template(text, font="Martienso", font_size=130)
+    return svg_template(text, font="Martienso", font_size=170)
 
 
 def plain_svg(text):
@@ -136,5 +136,24 @@ def svg_template(text, font="", font_size=90):
 
 
 if __name__ == "__main__":
-    svg_print("now is the time for all good turks to "
-              "come to the aid of the mariocart")
+    import sample
+    import random
+    st = sample.sample_text
+    r = random.randint(0, len(st)-80)
+    st = st[r:r+80]
+    t = ("now is the time for "
+         "all good turks to "
+         "come to the aid of "
+         "the mariocart")
+    w = ("WWWWWWWWWWWWWWWWWWW"
+         "WWWWWWWWWWWWWWWWWWW"
+         "WWWWWWWWWWWWWWWWWWW"
+         "WWWWWWWWWWWWWWWWWWW")
+    tc = "turkClient"
+    tb = "turkBrain"
+
+    svg_print(st,
+              sender=tc,
+              chatty=True,
+              save_svg=True,
+              direction=1)

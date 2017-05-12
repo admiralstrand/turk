@@ -11,7 +11,9 @@ def take_a_picture(filepath="live.jpg",
                    iso=1600,
                    mode_or_iso="iso"):
     """Take a picture."""
-    camera = PiCamera()
+    camera = PiCamera(sensor_mode=7)
+    camera.zoom(0.125, 1,  # x, y
+                0.75, 1)  # w, h
     sleep(1)
     if mode_or_iso == "mode":
         camera.exposure_mode = exposure_mode

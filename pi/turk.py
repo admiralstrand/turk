@@ -21,7 +21,7 @@ except:
 WIDE = 20
 HIGH = 4
 
-LIVEMODE = False
+LIVEMODE = True
 BACKSPACE_KEY = 127
 ENTER_KEY = 13
 CTRL_C = 3

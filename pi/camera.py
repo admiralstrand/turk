@@ -12,7 +12,8 @@ from time import sleep
 def take_a_picture(filepath="live.jpg",
                    exposure_mode='verylong',
                    iso=1600,
-                   mode_or_iso="iso"):
+                   mode_or_iso="iso",
+                   brightness=50):
     """Take a picture."""
     camera = PiCamera(sensor_mode=7)
     # camera.zoom(0.125, 1,  # x, y
@@ -22,6 +23,7 @@ def take_a_picture(filepath="live.jpg",
         camera.exposure_mode = exposure_mode
     elif mode_or_iso == "iso":
         camera.iso = iso
+    camera.brightness(brightness)
     # camera.start_preview()
     camera.capture(filepath)
     # camera.stop_preview()

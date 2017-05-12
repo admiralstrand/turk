@@ -22,6 +22,7 @@ iso = 200
 exposure_mode = 'verylong'
 mode_or_iso = "iso"
 print_direction = 1  # TODO: make this make sense
+brightness = 50
 
 
 def remote_command(message):
@@ -31,7 +32,7 @@ def remote_command(message):
 
     e.g. from the interface
         settings (can be any or all of the k:v pairs)
-            /set|iso:1600,exposure_mode:night,mode_or_iso:iso,print_direction:1
+            /set|iso:1600,exposure_mode:night,mode_or_iso:iso,print_direction:1,brightness:50
         take a picture
             /picture
             /pic
@@ -53,8 +54,9 @@ def remote_command(message):
     if m[0] in ["/wp", "/webpic"]:
         print_remote_pic(m[1])
     if m[0] in ["/set", "/settings"]:
-        global iso
+        global brightness
         global exposure_mode
+        global iso
         global mode_or_iso
         global print_direction
         if len(m) > 1:
@@ -69,6 +71,8 @@ def remote_command(message):
                     mode_or_iso = p[1]
                 if p[0] == "print_direction":
                     print_direction = p[1]
+                if p[0] == "brightness":
+                    brightness = p[1]
         print "settings requested:", m[0]
         print "settings now:"
         print "iso {}, exposure_mode {}, mode_or_iso {}".format(iso,

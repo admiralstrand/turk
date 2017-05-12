@@ -41,7 +41,7 @@ def remote_command(message):
     if m[0][0] != "/":
         print "something not right, command called with a non command", message
         raise
-    if m[0] in ["/pp", "/print pic", "/print picture" ]:
+    if m[0] in ["/pp", "/print pic", "/print picture"]:
         print_pic()
     if m[0] in ["/set", "/settings"]:
         global iso

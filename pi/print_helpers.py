@@ -9,6 +9,7 @@ lpr -o fit-to-page /usr/share/raspberrypi-artwork/raspberry-pi-logo.png
 """
 import cairo
 import os
+import requests
 import rsvg
 import text_input_helpers as tt
 
@@ -32,6 +33,14 @@ def print_pic():
                  "-o fit-to-page "
                  "live.jpg")
     os.system(type_this)
+
+
+def print_remote_pic(url):
+    """Get an image from the internet and print it."""
+    page = requests.get(url)
+    with open('live.jpg', 'wb') as test:
+        test.write(page.content)
+    print_pic()
 
 
 def svg_print(text,
@@ -156,3 +165,5 @@ if __name__ == "__main__":
               chatty=True,
               save_svg=True,
               direction=1)
+
+    print_remote_pic("http://digitalpolyphony.webs.com/billandted2.jpg")

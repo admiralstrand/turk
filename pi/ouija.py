@@ -7,12 +7,14 @@ import time
 from turk import tappy_typing
 from print_helpers import svg_print
 from print_helpers import print_pic
+from print_helpers import print_remote_pic
 try:
     from camera import take_a_picture
 except:
     from ben_shim import take_a_picture
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
+
 
 iso = 200
 exposure_mode = 'verylong'
@@ -36,6 +38,9 @@ def remote_command(message):
             /pp
             /print pic
             /print picture
+        print a picture from the web
+            /weppic
+            /wp
     """
     m = message.split("|")
     if m[0][0] != "/":
@@ -43,6 +48,8 @@ def remote_command(message):
         raise
     if m[0] in ["/pp", "/print pic", "/print picture"]:
         print_pic()
+    if m[0] in ["/wp", "/webpic"]:
+        print_remote_pic(m[1])
     if m[0] in ["/set", "/settings"]:
         global iso
         global exposure_mode

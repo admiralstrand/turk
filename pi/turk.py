@@ -56,10 +56,15 @@ def tappy_typing():
             row = int(math.floor(cursor_pos/WIDE))
             ada1.set_cursor(column, row)
 
+        elif typed_input is None:
+            print "got an f key probably"
+
         elif ord(typed_input) == CTRL_C:
             if not LIVEMODE:
                 print "!! EJECT !! EJECT !! EJECT !!"
                 yield "exit please"
+            else:
+                print "Someone is trying to kill me, but I'm invincible"
 
         elif ord(typed_input) == ENTER_KEY:
             ada1.write_to_screen("Sending")

@@ -100,6 +100,10 @@ def get_acceptable_chars(special_chars=""):
                                special_chars,
                                letters,
                                punctuation])
+    # unacceptable chars, for some reason:
+    acceptableChars = acceptableChars.replace("<", "")
+    acceptableChars = acceptableChars.replace(">", "")
+    acceptableChars = acceptableChars.replace("-", "")
     return acceptableChars
 
 

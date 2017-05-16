@@ -38,7 +38,13 @@ def remote_command(message):
 
     e.g. from the interface
         settings (can be any or all of the k:v pairs)
-            /set|iso:1600,exposure_mode:night,mode_or_iso:iso,print_direction:1,brightness:50
+            /set|iso:1600,exposure_mode:night
+            possible values examples:
+                mode_or_iso:iso
+                print_direction:1
+                brightness:50           #0-100
+                roll_length:15000       #mm
+                each_print_length:120   #mm
         take a picture
             /picture
             /pic
@@ -50,6 +56,9 @@ def remote_command(message):
         print a picture from the web
             /webpic
             /wp
+        reset the roll length after putting a new roll in
+            /roll
+            /new-roll
     """
     m = message.split("|")
     if m[0][0] != "/":
@@ -59,7 +68,7 @@ def remote_command(message):
         print_pic()
     if m[0] in ["/wp", "/webpic"]:
         print_remote_pic(m[1])
-    if m[0] in ["/roll", "/new roll"]:
+    if m[0] in ["/roll", "/new-roll"]:
         global print_counter
         print_counter = 0
     if m[0] in ["/set", "/settings"]:

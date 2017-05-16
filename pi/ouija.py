@@ -5,7 +5,7 @@ import json
 import sys
 import thread
 import time
-# import websocket
+import math
 from turk import tappy_typing
 from print_helpers import svg_print
 from print_helpers import print_pic
@@ -17,12 +17,18 @@ except:
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 
-
+# cam globals
 iso = 200
 exposure_mode = 'verylong'
 mode_or_iso = "iso"
-print_direction = 1  # TODO: make this make sense
 brightness = 50
+# print globals
+print_direction = 1  # TODO: make this make sense
+# roll globals
+print_counter = 0
+roll_length = 15000  # value in mm, but really, who cares.
+each_print_length = 120  # value in mm, but really, who cares.
+number_of_prints_before_end_to_warn = 8
 
 
 def remote_command(message):
@@ -53,12 +59,17 @@ def remote_command(message):
         print_pic()
     if m[0] in ["/wp", "/webpic"]:
         print_remote_pic(m[1])
+    if m[0] in ["/roll", "/new roll"]:
+        global print_counter
+        print_counter = 0
     if m[0] in ["/set", "/settings"]:
         global brightness
         global exposure_mode
         global iso
         global mode_or_iso
         global print_direction
+        global roll_length
+        global each_print_length
         if len(m) > 1:
             pairs = m[1].split(",")
             for pair in pairs:
@@ -73,6 +84,10 @@ def remote_command(message):
                     print_direction = p[1]
                 if p[0] == "brightness":
                     brightness = p[1]
+                if p[0] == "roll_length":
+                    roll_length = p[1]
+                if p[0] == "each_print_length":
+                    each_print_length = p[1]
         print "settings requested:", m[0]
         print "settings now:"
         print "iso {}, exposure_mode {}, mode_or_iso {}".format(iso,
@@ -139,6 +154,8 @@ def run(topic, port, server_address):
     tappy_typing is a generator, it hands control over to the input code when
     it's running then the generator hands it back with a message.
     """
+    global print_counter
+    number_of_prints_on_this_roll = math.floor(roll_length / each_print_length)
     t = tappy_typing()
     while True:
         value = next(t)
@@ -153,15 +170,29 @@ def run(topic, port, server_address):
         if value != "exit please":
             payload = json.dumps({"handle": "turkClient",
                                   "text": value})
+            print "dump", payload
+            publish.single(topic,
+                           payload=payload,
+                           hostname=server_address,
+                           port=port)
         else:
             # ws.close()
             print "thread terminating..."
             return True
-        print "dump", payload
-        publish.single(topic,
-                       payload=payload,
-                       hostname=server_address,
-                       port=port)
+
+        print_counter += 1
+        m = "{} of {} prints left on this roll"
+        print m.format(int(number_of_prints_on_this_roll - print_counter),
+                       int(number_of_prints_on_this_roll))
+        if print_counter == (number_of_prints_on_this_roll -
+                             number_of_prints_before_end_to_warn):
+            paper_warning = ("Please warn my human helper that my paper "
+                             "is running low or I will be silenced.")
+            publish.single(topic,
+                           payload=paper_warning,
+                           hostname=server_address,
+                           port=port)
+
     time.sleep(1)
 
 

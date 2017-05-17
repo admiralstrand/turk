@@ -26,6 +26,9 @@ BACKSPACE_KEY = 127
 ENTER_KEY = 13
 CTRL_C = 3
 
+SEND_PAUSE = 1.5  # seconds
+blank3rows = (((" "*20)+"\n")*3)
+
 
 def tappy_typing():
     """Get a single key press from the user, then push to LCD.
@@ -67,10 +70,9 @@ def tappy_typing():
                 print "Someone is trying to kill me, but I'm invincible"
 
         elif ord(typed_input) == ENTER_KEY:
-            ada1.write_to_screen("Sending")
-            time.sleep(0.5)
+            ada1.write_to_screen("Sending...")
+            time.sleep(SEND_PAUSE)
             ada1.write_to_screen("")
-            # TODO: the actual sending code
             yield running_string
             running_string = ""
 

@@ -77,7 +77,7 @@ def tappy_typing():
             running_string = ""
 
         elif ord(typed_input) == BACKSPACE_KEY:
-            running_string = tt.backspace(running_string, cursor_pos)
+            running_string = tt.backspace(running_string[:80], cursor_pos)
             cursor_pos -= 1
 
         elif typed_input not in acceptableChars:
@@ -104,6 +104,7 @@ def tappy_typing():
             temp_s_list.insert(cursor_pos, typed_input)
             running_string = "".join(temp_s_list)
             cursor_pos += 1
+            cursor_pos = tt.clamp(cursor_pos, 80)
             print "adding", typed_input
 
         tt.show(running_string, cursor_pos)

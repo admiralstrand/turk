@@ -76,24 +76,35 @@ def tappy_typing():
             yield running_string
             running_string = ""
 
-        elif tt.buffer_length(running_string) == 80:
-            running_string = tt.send_complete_words(running_string)
-            tt.show(running_string, cursor_pos)
-
         elif ord(typed_input) == BACKSPACE_KEY:
             running_string = tt.backspace(running_string, cursor_pos)
             cursor_pos -= 1
-            tt.show(running_string, cursor_pos)
 
         elif typed_input not in acceptableChars:
             print "don't be sketchy.\n{} not in {}".format(typed_input,
                                                            acceptableChars)
 
         else:
+            bl = tt.buffer_length(running_string)
+            if bl >= 75:
+                print "fat buffy"
+                ada1.write_to_screen(blank3rows + "Running out of space")
+                time.sleep(0.2)
+                tt.show(running_string, cursor_pos)
+            elif bl >= 79:
+                ada1.write_to_screen(blank3rows + "        Out of space")
+                time.sleep(0.5)
+                tt.show(running_string, cursor_pos)
+            trim = 80
+            if bl > 80:
+                trim = 79 - bl
+
+            running_string = running_string[:trim]
             temp_s_list = list(running_string)
             temp_s_list.insert(cursor_pos, typed_input)
             running_string = "".join(temp_s_list)
             cursor_pos += 1
+            print "adding", typed_input
 
         tt.show(running_string, cursor_pos)
 

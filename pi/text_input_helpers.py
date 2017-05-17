@@ -204,7 +204,9 @@ def buffer_length(running_text):
     """Measure the length of the broken up string."""
     as_list_of_lists = break_for_wide_x_high_screen(running_text)
     as_str = prepare_for_screen(as_list_of_lists)
-    return len(as_str)
+    buf_len = len("".join(as_str).strip())
+    print "buffer_length:", buf_len
+    return buf_len
 
 
 def show(running_string, cursor_pos=None, wide=20, high=4):

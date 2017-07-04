@@ -3,7 +3,7 @@
 More docs here: https://picamera.readthedocs.io
 """
 from picamera import PiCamera
-from print_helpers import log
+# from print_helpers import log
 from print_helpers import timestamp
 from shutil import copyfile
 from time import sleep
@@ -30,8 +30,11 @@ def take_a_picture(filepath="live.jpg",
     camera.close()
 
     file_name = "history/{}.jpg".format(timestamp())
-    copyfile("live.jpg", file_name)
-    log("printed " + file_name)
+    try:
+        copyfile("live.jpg", file_name)
+    except Exception as e:
+        print "Something went wrong", e
+    # log("printed " + file_name)
 
 
 if __name__ == "__main__":
